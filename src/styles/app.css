@@ -1,0 +1,63 @@
+@import "tailwindcss" source("../");
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+
+  * {
+    @apply border-gray-200;
+  }
+
+  html,
+  body {
+    @apply text-gray-900 bg-gray-50;
+    font-family:
+      "Inter",
+      system-ui,
+      -apple-system,
+      sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+@theme {
+  --color-edges-50: #e6f0ff;
+  --color-edges-100: #b3d1ff;
+  --color-edges-200: #80b3ff;
+  --color-edges-300: #4d94ff;
+  --color-edges-400: #1a75ff;
+  --color-edges-500: #0066ff;
+  --color-edges-600: #0052cc;
+  --color-edges-700: #003d99;
+  --color-edges-800: #002966;
+  --color-edges-900: #001433;
+}
+
+@layer utilities {
+  .font-caveat {
+    font-family: "Caveat", cursive;
+  }
+
+  .font-inter {
+    font-family:
+      "Inter",
+      system-ui,
+      -apple-system,
+      sans-serif;
+  }
+
+  .font-dm-serif {
+    font-family: "DM Serif Display", "Georgia", serif;
+  }
+}
