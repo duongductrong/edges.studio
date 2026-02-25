@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { Logo } from "~/components/Logo";
+import { SupportButton } from "~/components/SupportButton";
 
 const navLinks = [
   // { label: "Products", href: "#", hasDropdown: false },
@@ -72,12 +73,7 @@ export function Navbar() {
 
             {/* Support — right */}
             <div className="flex items-center gap-3">
-              <a
-                href="mailto:info@edges.studio"
-                className="rounded-full border border-gray-300 px-5 py-2 text-sm font-medium text-gray-800 transition-colors hover:border-gray-900 hover:bg-gray-50"
-              >
-                Support
-              </a>
+              <SupportButton variant="outline" size="md" />
             </div>
           </motion.nav>
         )}
@@ -136,20 +132,9 @@ export function Navbar() {
               {/* Divider */}
               <div className="mx-1 h-5 w-px bg-gray-200" />
 
-              {/* Auth actions */}
+              {/* Support */}
               <div className="flex items-center gap-1 pr-1">
-                <a
-                  href="#"
-                  className="rounded-full px-3 py-1.5 text-sm font-semibold text-gray-800 transition-colors hover:bg-gray-100"
-                >
-                  Log in
-                </a>
-                <a
-                  href="#"
-                  className="rounded-full bg-edges-500 px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-edges-600"
-                >
-                  Sign up
-                </a>
+                <SupportButton variant="outline" size="sm" />
               </div>
             </motion.nav>
           </div>
