@@ -133,7 +133,105 @@ export function TermsOfService() {
         {/* 6 */}
         <section>
           <h2 className="mb-3 text-lg font-semibold text-gray-900">
-            6. Disclaimer of Warranties
+            6. Payments, Refunds &amp; Credits
+          </h2>
+          <p>
+            edges.studio uses{" "}
+            <a
+              href="https://polar.sh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 underline decoration-blue-300 underline-offset-2 transition-colors hover:text-blue-800"
+            >
+              Polar
+            </a>{" "}
+            as its Merchant of Record to process all payments, manage credits,
+            and handle billing for our products and services. By making a
+            purchase, you agree to the following refund terms:
+          </p>
+
+          <ul className="mt-3 list-inside list-disc space-y-1.5 text-gray-600">
+            <li>
+              <strong>Full &amp; partial refunds</strong> — We may issue full or
+              partial refunds at our discretion. However, the initial
+              transaction fees charged by credit-card networks and payment
+              service providers are <strong>non-refundable</strong> to us and
+              are therefore not included in any refund.
+            </li>
+            <li>
+              <strong>60-day refund window</strong> — Polar reserves the right
+              to issue refunds up to 60&nbsp;days after the original purchase
+              date as part of its efforts to proactively reduce disputes and
+              chargebacks.
+            </li>
+            <li>
+              <strong>Credits &amp; balance</strong> — Any credits or balance
+              added to your account are subject to the same refund policy.
+              Unused credits do not carry over after account termination unless
+              otherwise stated.
+            </li>
+          </ul>
+
+          <p className="mt-3">
+            All prices are displayed in the currency indicated at checkout.
+            Applicable taxes are calculated and collected by Polar in accordance
+            with local regulations.
+          </p>
+        </section>
+
+        {/* 7 */}
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+            7. Disputes &amp; Chargebacks
+          </h2>
+          <p>
+            If a customer opens a dispute or chargeback through their bank for a
+            purchase made via edges.studio, the following terms apply:
+          </p>
+
+          <ul className="mt-3 list-inside list-disc space-y-1.5 text-gray-600">
+            <li>
+              <strong>Dispute fee</strong> — Each dispute incurs a{" "}
+              <strong>$15&nbsp;USD fee per dispute</strong>, regardless of the
+              outcome. This fee is imposed by the underlying credit-card
+              networks and payment service providers and{" "}
+              <strong>cannot be waived or refunded</strong>.
+            </li>
+            <li>
+              <strong>Customer responsibility</strong> — If a customer initiates
+              a dispute or chargeback <strong>without</strong> a reasonable and
+              verifiable reason — meaning the customer must have compelling
+              reasons and clear evidence to justify the request — the customer
+              shall be responsible for bearing the full dispute costs that Polar
+              imposes.
+            </li>
+            <li>
+              <strong>Good-faith resolution</strong> — We strongly encourage
+              customers to contact us at{" "}
+              <a
+                href="mailto:info@edges.studio"
+                className="text-blue-600 underline decoration-blue-300 underline-offset-2 transition-colors hover:text-blue-800"
+              >
+                info@edges.studio
+              </a>{" "}
+              before filing a dispute. In most cases, we can resolve issues
+              faster and more favourably through direct communication.
+            </li>
+            <li>
+              <strong>Chargeback monitoring</strong> — Credit-card networks
+              impose monitoring programs and penalties on sellers with excessive
+              chargeback rates (~0.7%+). Because Polar acts as the Merchant of
+              Record, edges.studio and Polar continuously monitor chargeback
+              rates and may take proactive measures — including account
+              suspension — to keep rates within acceptable industry thresholds.
+            </li>
+          </ul>
+        </section>
+
+        {/* 8 */}
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+            8. Disclaimer of Warranties
           </h2>
           <p>
             Our products and services are provided{" "}
@@ -151,7 +249,7 @@ export function TermsOfService() {
         {/* 7 */}
         <section>
           <h2 className="mb-3 text-lg font-semibold text-gray-900">
-            7. Limitation of Liability
+            9. Limitation of Liability
           </h2>
           <p>
             To the maximum extent permitted by applicable law, edges.studio and
@@ -162,10 +260,10 @@ export function TermsOfService() {
           </p>
         </section>
 
-        {/* 8 */}
+        {/* 10 */}
         <section>
           <h2 className="mb-3 text-lg font-semibold text-gray-900">
-            8. Termination
+            10. Termination
           </h2>
           <p>
             We may terminate or suspend your access to our services at our sole
@@ -180,10 +278,10 @@ export function TermsOfService() {
           </p>
         </section>
 
-        {/* 9 */}
+        {/* 11 */}
         <section>
           <h2 className="mb-3 text-lg font-semibold text-gray-900">
-            9. Changes to These Terms
+            11. Changes to These Terms
           </h2>
           <p>
             We reserve the right to update or modify these Terms at any time.
@@ -193,10 +291,10 @@ export function TermsOfService() {
           </p>
         </section>
 
-        {/* 10 */}
+        {/* 12 */}
         <section>
           <h2 className="mb-3 text-lg font-semibold text-gray-900">
-            10. Governing Law
+            12. Governing Law
           </h2>
           <p>
             These Terms shall be governed by and construed in accordance with
@@ -205,10 +303,10 @@ export function TermsOfService() {
           </p>
         </section>
 
-        {/* 11 */}
+        {/* 13 */}
         <section>
           <h2 className="mb-3 text-lg font-semibold text-gray-900">
-            11. Contact Us
+            13. Contact Us
           </h2>
           <p>
             If you have any questions about these Terms of Service, please
