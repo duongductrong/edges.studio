@@ -7,17 +7,17 @@ const footerLinks = {
     { label: "OrbitPods", href: "/orbitpods" },
     { label: "All Products", href: "/products" },
   ],
-  "Docs & Resources": [
+  Resources: [
     { label: "Documentation", href: "/docs" },
     { label: "Changelog", href: "/changelog" },
     { label: "Blog", href: "/blog" },
   ],
-  "Security & Legal": [
+  Security: [
     { label: "Privacy Policy", href: "/privacy", internal: true },
     { label: "Terms of Service", href: "/terms", internal: true },
     { label: "Security", href: "/security" },
   ],
-  "Company & Contact": [
+  Contact: [
     { label: "Contact Us", href: "mailto:info@edges.studio", external: true },
     { label: "Twitter (X)", href: "https://x.com/edgesstudio", external: true },
     { label: "GitHub", href: "https://github.com/edgesstudio", external: true },
