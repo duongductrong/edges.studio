@@ -75,7 +75,7 @@ function BlueprintPanel() {
       initial={{ opacity: 0, scale: 0.92 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
-      className="relative mx-auto w-[320px] md:w-[420px] h-[190px] md:h-[240px] rounded-2xl overflow-hidden"
+      className="relative mx-auto w-[260px] md:w-[340px] h-[155px] md:h-[195px] rounded-2xl overflow-hidden"
       style={{
         background:
           "linear-gradient(135deg, #E8F0FE 0%, #D4E4FC 30%, #C7DBFA 60%, #DAEAFF 100%)",
@@ -301,7 +301,7 @@ function BlueprintPanel() {
           animate={{ opacity: 0.45, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.85 }}
         >
-          <Logo size={90} />
+          <Logo size={64} />
         </motion.div>
       </div>
 
@@ -393,13 +393,13 @@ export function ProductMockup() {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="relative mx-auto mt-14 w-full max-w-4xl"
+      className="relative mx-auto mt-14 w-full max-w-6xl"
     >
       {/* Decorative background glow */}
       <div className="absolute -inset-8 bg-linear-to-b from-blue-50/50 via-transparent to-transparent rounded-3xl blur-2xl pointer-events-none" />
 
       {/* ══ Illustration container ══ */}
-      <div className="relative rounded-2xl bg-linear-to-b from-[#F0F4FF] via-white to-[#F8FAFF] border border-gray-200/50 shadow-xl shadow-gray-200/30 overflow-hidden px-6 py-10 md:px-10 md:py-14">
+      <div className="relative rounded-2xl bg-linear-to-b from-[#F0F4FF] via-white to-transparent overflow-hidden px-6 py-10 md:px-10 md:py-14">
         {/* === Layer 1: Source Icon === */}
         <motion.div
           initial={{ opacity: 0, scale: 0.7, y: -10 }}
