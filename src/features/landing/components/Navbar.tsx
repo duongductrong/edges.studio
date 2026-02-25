@@ -32,12 +32,45 @@ export function Navbar() {
             transition={{ duration: 0.3 }}
             className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 bg-white/80 backdrop-blur-md"
           >
+            {/* Logo — left */}
             <a href="/" className="flex items-center gap-2.5">
               <Logo size={34} />
               <span className="text-xl font-semibold tracking-tight text-gray-900">
                 edges.
               </span>
             </a>
+
+            {/* Nav links — center */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1">
+              {navLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900"
+                >
+                  {link.label}
+                  {link.hasDropdown && (
+                    <svg
+                      width="10"
+                      height="10"
+                      viewBox="0 0 10 10"
+                      fill="none"
+                      className="opacity-50"
+                    >
+                      <path
+                        d="M2.5 3.75L5 6.25L7.5 3.75"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  )}
+                </a>
+              ))}
+            </div>
+
+            {/* Support — right */}
             <div className="flex items-center gap-3">
               <a
                 href="mailto:info@edges.studio"
