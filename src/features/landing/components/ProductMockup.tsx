@@ -350,7 +350,7 @@ function LaptopMockup({
             <div className="flex items-center h-4 px-1.5 bg-gray-800/90 border-b border-white/5">
               <TrafficLights />
               <span className="text-[5px] md:text-[6px] text-white/50 ml-auto mr-auto">
-                ChatSphere 5
+                MacOS App
               </span>
             </div>
             {/* Mini content */}

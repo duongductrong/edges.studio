@@ -31,7 +31,7 @@ export function Footer() {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
-      className="w-full bg-white border-t border-t-gray-200 pt-20 pb-10"
+      className="w-full bg-white pt-20 pb-10"
     >
       <div className="mx-auto max-w-6xl px-8">
         {/* Top section: Logo + Status */}
