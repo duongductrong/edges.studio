@@ -63,8 +63,8 @@ export function Logo({ size = 34 }: { size?: number }) {
         height="176"
         rx="46"
         fill="none"
-        stroke="rgba(255,255,255,0.12)"
-        strokeWidth="1.5"
+        stroke="rgba(255,255,255,0.6)"
+        stroke-width="2"
       />
       <rect
         x="12"
