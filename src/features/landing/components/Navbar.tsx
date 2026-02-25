@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Logo } from "~/components/Logo";
 
 const navLinks = [
-  { label: "Products", href: "#", hasDropdown: true },
-  { label: "Apps", href: "#" },
+  // { label: "Products", href: "#", hasDropdown: false },
+  { label: "Apps", href: "/apps", hasDropdown: false },
   { label: "Changelog", href: "/changelog" },
   { label: "Blog", href: "/blog" },
 ];

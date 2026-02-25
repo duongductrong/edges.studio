@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Navbar, Footer } from "~/features/landing";
 import { TermsOfService } from "~/features/legal";
 import { seo } from "~/utils/seo";
 
-export const Route = createFileRoute("/terms")({
+export const Route = createFileRoute("/_layout/terms")({
   head: () => ({
     meta: [
       ...seo({
@@ -17,11 +16,5 @@ export const Route = createFileRoute("/terms")({
 });
 
 function TermsPage() {
-  return (
-    <main className="min-h-screen bg-white">
-      <Navbar />
-      <TermsOfService />
-      <Footer />
-    </main>
-  );
+  return <TermsOfService />;
 }

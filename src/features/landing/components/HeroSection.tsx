@@ -30,10 +30,7 @@ export function HeroSection() {
           transition={{ duration: 0.6, delay: 0.35 }}
           className="mt-6 text-base md:text-lg text-gray-500 max-w-md mx-auto leading-relaxed"
         >
-          Desktop & web applications delivered with meticulous attention to
-          detail.
-          <br />
-          No templates, no back-and-forth.
+          MacOS Applications delivered with meticulous attention to detail.
         </motion.p>
 
         <ProductMockup />

@@ -12,10 +12,10 @@ const footerLinks = {
     { label: "Changelog", href: "/changelog" },
     { label: "Blog", href: "/blog" },
   ],
-  Security: [
+  Policies: [
     { label: "Privacy Policy", href: "/privacy", internal: true },
     { label: "Terms of Service", href: "/terms", internal: true },
-    { label: "Security", href: "/security" },
+    // { label: "Refund Policy", href: "/refund", internal: true },
   ],
   Contact: [
     { label: "Contact Us", href: "mailto:info@edges.studio", external: true },

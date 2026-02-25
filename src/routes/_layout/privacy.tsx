@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Navbar, Footer } from "~/features/landing";
 import { PrivacyPolicy } from "~/features/legal";
 import { seo } from "~/utils/seo";
 
-export const Route = createFileRoute("/privacy")({
+export const Route = createFileRoute("/_layout/privacy")({
   head: () => ({
     meta: [
       ...seo({
@@ -17,11 +16,5 @@ export const Route = createFileRoute("/privacy")({
 });
 
 function PrivacyPage() {
-  return (
-    <main className="min-h-screen bg-white">
-      <Navbar />
-      <PrivacyPolicy />
-      <Footer />
-    </main>
-  );
+  return <PrivacyPolicy />;
 }
