@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { Logo } from "~/components/Logo";
@@ -34,19 +35,19 @@ export function Navbar() {
             className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 bg-white/80 backdrop-blur-md max-w-6xl mx-auto"
           >
             {/* Logo — left */}
-            <a href="/" className="flex items-center gap-2.5">
+            <Link to="/" className="flex items-center gap-2.5">
               <Logo size={34} />
               <span className="text-xl font-semibold tracking-tight text-gray-900">
                 edges.
               </span>
-            </a>
+            </Link>
 
             {/* Nav links — center */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.label}
-                  href={link.href}
+                  to={link.href}
                   className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900"
                 >
                   {link.label}
@@ -67,7 +68,7 @@ export function Navbar() {
                       />
                     </svg>
                   )}
-                </a>
+                </Link>
               ))}
             </div>
 
@@ -92,9 +93,9 @@ export function Navbar() {
               className="pointer-events-auto flex items-center gap-1 rounded-full border border-gray-200/60 bg-white px-2 py-1.5 shadow-lg shadow-black/6"
             >
               {/* Logo */}
-              <a href="/" className="flex items-center pl-2 pr-1">
+              <Link to="/" className="flex items-center pl-2 pr-1">
                 <Logo size={28} />
-              </a>
+              </Link>
 
               {/* Divider */}
               <div className="mx-1 h-5 w-px bg-gray-200" />
@@ -102,9 +103,9 @@ export function Navbar() {
               {/* Nav links */}
               <div className="flex items-center gap-0.5">
                 {navLinks.map((link) => (
-                  <a
+                  <Link
                     key={link.label}
-                    href={link.href}
+                    to={link.href}
                     className="flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900"
                   >
                     {link.label}
@@ -125,7 +126,7 @@ export function Navbar() {
                         />
                       </svg>
                     )}
-                  </a>
+                  </Link>
                 ))}
               </div>
 
