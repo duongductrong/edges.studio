@@ -4,7 +4,7 @@ import { ProductMockup } from "./ProductMockup";
 export function HeroSection() {
   return (
     <section className="relative pt-32 pb-16 px-6">
-      <div className="mx-auto max-w-3xl text-center">
+      <div className="mx-auto text-center">
         {/* Heading */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
