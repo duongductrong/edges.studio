@@ -600,7 +600,9 @@ function ProductCardCarousel({
               key={idx}
               className={cn(
                 'absolute inset-0 pt-8 pl-6 md:pt-10 transition-opacity ease-[cubic-bezier(0.16,1,0.3,1)]',
-                config.effect === 'slide-fade' ? 'duration-700' : 'duration-500',
+                config.effect === 'slide-fade'
+                  ? 'duration-700'
+                  : 'duration-500',
                 idx === selectedIndex ? 'opacity-100 z-10' : 'opacity-0 z-0',
               )}
             >
@@ -665,15 +667,12 @@ function ProductCardCarousel({
         bgClass,
       )}
     >
-      <div
-        ref={emblaRef}
-        className="h-full cursor-grab active:cursor-grabbing"
-      >
+      <div ref={emblaRef} className="h-full cursor-grab active:cursor-grabbing">
         <div className="flex h-full">
           {images.map((img, idx) => (
             <div
               key={idx}
-              className="flex-[0_0_100%] min-w-0 pt-8 pl-6 md:pt-10"
+              className="flex-[0_0_100%] min-w-0 pt-8 pl-6 md:pt-10 pr-[1px]"
             >
               <img
                 src={img}
