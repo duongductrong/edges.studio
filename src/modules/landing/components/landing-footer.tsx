@@ -14,13 +14,6 @@ export function LandingFooter() {
           {/* Brand */}
           <div className="space-y-2">
             <div className="flex items-center gap-2.5">
-              <img
-                src="/logo.svg"
-                alt={`${COMPANY_NAME} logo`}
-                className="size-6"
-                width={24}
-                height={24}
-              />
               <span className="text-sm font-semibold text-foreground">
                 {COMPANY_NAME}
               </span>

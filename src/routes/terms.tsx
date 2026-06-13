@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { TermsOfService } from '~/features/legal'
+import { TermsOfService } from '~/modules/legal'
 import { LandingLayout } from '~/modules/landing/components/landing-layout'
 import { seo } from '~/utils/seo'
 

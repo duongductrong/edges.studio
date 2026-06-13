@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { PrivacyPolicy } from '~/features/legal'
+import { PrivacyPolicy } from '~/modules/legal'
 import { LandingLayout } from '~/modules/landing/components/landing-layout'
 import { seo } from '~/utils/seo'
 

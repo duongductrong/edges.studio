@@ -14,13 +14,6 @@ import { COMPANY_NAME, NAV_LINKS } from '../lib/constants'
 function Logo() {
   return (
     <Link to="/" className="flex items-center gap-2.5">
-      <img
-        src="/logo.svg"
-        alt={`${COMPANY_NAME} logo`}
-        className="size-7"
-        width={28}
-        height={28}
-      />
       <span className="text-[15px] font-semibold tracking-tight text-foreground">
         {COMPANY_NAME}
       </span>

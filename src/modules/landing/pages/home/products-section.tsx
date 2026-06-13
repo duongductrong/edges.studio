@@ -114,15 +114,6 @@ export function ProductsSection() {
             badges={[
               {
                 label: 'Drag & Drop',
-                icon: (
-                  <span
-                    className="text-[11px] leading-none"
-                    role="img"
-                    aria-label="Droplet"
-                  >
-                    💧
-                  </span>
-                ),
                 bgClass:
                   'bg-sky-100 hover:bg-sky-200/80 text-sky-800 border-transparent',
               },
@@ -142,15 +133,6 @@ export function ProductsSection() {
             badges={[
               {
                 label: 'Local AI',
-                icon: (
-                  <span
-                    className="text-[11px] leading-none"
-                    role="img"
-                    aria-label="Sparkle"
-                  >
-                    ✦
-                  </span>
-                ),
                 bgClass:
                   'bg-indigo-500/30 hover:bg-indigo-500/40 text-indigo-200 border-indigo-500/20',
               },

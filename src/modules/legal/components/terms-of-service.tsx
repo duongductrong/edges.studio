@@ -1,6 +1,9 @@
+import { Container } from '#/components/ui/container'
+
 export function TermsOfService() {
   return (
-    <article className="mx-auto max-w-3xl px-6 pt-32 pb-24">
+    <Container asChild className="pt-32 pb-24">
+      <article>
       <header className="mb-12">
         <h1 className="text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
           Terms of Service
@@ -315,5 +318,6 @@ export function TermsOfService() {
         </section>
       </div>
     </article>
+    </Container>
   )
 }
