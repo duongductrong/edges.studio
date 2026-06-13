@@ -20,6 +20,12 @@ export interface ProductCardSmallProps extends React.ComponentProps<'div'> {
   bgClass?: string
   bgImage?: string
   textColor?: 'light' | 'dark'
+  theme?: 'light' | 'dark'
+  titleClass?: string
+  subtitleClass?: string
+  descriptionClass?: string
+  borderClass?: string
+  iconClass?: string
   badges?: CardBadge[]
 }
 
@@ -38,6 +44,15 @@ export interface ProductCardLargeProps extends React.ComponentProps<'div'> {
   stars?: string | number
   downloads?: string | number
   trendingBadge?: boolean | React.ReactNode
+  dark?: boolean
+  theme?: 'light' | 'dark'
+  textColor?: 'light' | 'dark'
+  titleClass?: string
+  subtitleClass?: string
+  descriptionClass?: string
+  borderClass?: string
+  iconClass?: string
+  ctaClass?: string
 }
 
 // Small Card Component
@@ -57,28 +72,39 @@ export const ProductCardSmall = React.forwardRef<
       bgClass = 'bg-zinc-100',
       bgImage,
       textColor,
+      theme,
+      titleClass,
+      subtitleClass,
+      descriptionClass,
+      borderClass,
+      iconClass,
       badges = [],
       ...props
     },
     ref,
   ) => {
-    // Determine text colors based on background variant
-    const isDarkBg =
-      variant === 'image' ||
-      bgClass.includes('bg-blue') ||
-      bgClass.includes('bg-black') ||
-      bgClass.includes('bg-zinc-900') ||
-      textColor === 'light'
-    const textThemeClass = isDarkBg ? 'text-white' : 'text-zinc-900'
-    const subtitleThemeClass = isDarkBg ? 'text-white/60' : 'text-zinc-500'
-    const descThemeClass = isDarkBg ? 'text-white/90' : 'text-zinc-600'
+    // Determine text colors based on theme / background variant
+    const isDark = theme === 'dark' || textColor === 'light' || (
+      !theme && !textColor && (
+        variant === 'image' ||
+        bgClass.includes('bg-blue') ||
+        bgClass.includes('bg-black') ||
+        bgClass.includes('bg-zinc-900') ||
+        bgClass.includes('bg-indigo')
+      )
+    )
+    const textThemeClass = isDark ? 'text-white' : 'text-zinc-900'
+    const subtitleThemeClass = isDark ? 'text-white/60' : 'text-zinc-500'
+    const descThemeClass = isDark ? 'text-white/90' : 'text-zinc-600'
+    const currentBorderClass = borderClass || 'border-border/50'
 
     if (variant === 'placeholder') {
       return (
         <div
           ref={ref}
           className={cn(
-            'flex flex-col justify-between items-center p-6 h-[380px] w-full rounded-[28px] border border-border/50 bg-white shadow-xs select-none',
+            'flex flex-col justify-between items-center p-6 h-[380px] w-full rounded-[28px] border bg-white shadow-xs select-none',
+            currentBorderClass,
             className,
           )}
           {...props}
@@ -102,8 +128,9 @@ export const ProductCardSmall = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          'group flex flex-col justify-between p-6 h-[380px] w-full rounded-[28px] relative overflow-hidden shadow-xs border border-border/50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
+          'group flex flex-col justify-between p-6 h-[380px] w-full rounded-[28px] relative overflow-hidden shadow-xs border transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
           variant === 'solid' ? bgClass : '',
+          currentBorderClass,
           className,
         )}
         {...props}
@@ -126,7 +153,10 @@ export const ProductCardSmall = React.forwardRef<
             <div className="flex items-center gap-3">
               {/* App Icon */}
               {icon && (
-                <div className="size-11 rounded-xl bg-white shadow-xs flex items-center justify-center overflow-hidden shrink-0 border border-border/50">
+                <div className={cn(
+                  'size-11 rounded-xl bg-white shadow-xs flex items-center justify-center overflow-hidden shrink-0 border border-border/50',
+                  iconClass
+                )}>
                   {typeof icon === 'string' ? (
                     <img
                       src={icon}
@@ -144,6 +174,7 @@ export const ProductCardSmall = React.forwardRef<
                   className={cn(
                     'text-[16px] font-semibold leading-tight',
                     textThemeClass,
+                    titleClass,
                   )}
                 >
                   {title}
@@ -153,6 +184,7 @@ export const ProductCardSmall = React.forwardRef<
                     className={cn(
                       'text-[12.5px] font-medium leading-none',
                       subtitleThemeClass,
+                      subtitleClass,
                     )}
                   >
                     {subtitle}
@@ -167,7 +199,7 @@ export const ProductCardSmall = React.forwardRef<
                 href={href}
                 className={cn(
                   'flex items-center justify-center size-8 rounded-full shadow-xs border transition-all duration-200',
-                  isDarkBg
+                  isDark
                     ? 'bg-white/95 text-zinc-900 border-transparent hover:bg-white hover:scale-105'
                     : 'bg-white text-zinc-700 border-border/50 hover:bg-zinc-50 hover:scale-105',
                 )}
@@ -198,6 +230,7 @@ export const ProductCardSmall = React.forwardRef<
               className={cn(
                 'text-[14.5px] leading-relaxed font-medium mt-auto mb-4 tracking-tight',
                 descThemeClass,
+                descriptionClass,
               )}
             >
               {description}
@@ -213,7 +246,7 @@ export const ProductCardSmall = React.forwardRef<
                   className={cn(
                     'inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-[12px] font-semibold border transition-colors select-none',
                     badge.bgClass ||
-                      (isDarkBg
+                      (isDark
                         ? 'bg-white/10 hover:bg-white/15 text-white border-white/10'
                         : 'bg-zinc-200/60 hover:bg-zinc-200/80 text-zinc-800 border-transparent'),
                     badge.textClass || '',
@@ -465,15 +498,41 @@ export const ProductCardLarge = React.forwardRef<
       stars,
       downloads,
       trendingBadge,
+      dark = false,
+      theme,
+      textColor,
+      titleClass,
+      subtitleClass,
+      descriptionClass,
+      borderClass,
+      iconClass,
+      ctaClass,
       ...props
     },
     ref,
   ) => {
+    const isDark = theme === 'dark' || textColor === 'light' || dark
+    const textTitleClass = isDark ? 'text-zinc-100' : 'text-zinc-900'
+    const textSubtitleClass = isDark ? 'text-zinc-400' : 'text-zinc-500'
+    const textDescClass = isDark ? 'text-zinc-200' : 'text-zinc-800'
+    const currentBorderClass = borderClass || (isDark ? 'border-zinc-800' : 'border-border/50')
+
+    const defaultLeftBg = isDark ? 'bg-zinc-900' : 'bg-[#f0f9ff]/80'
+    const currentLeftBg = leftBgClass === 'bg-[#f0f9ff]/80' ? defaultLeftBg : (leftBgClass || defaultLeftBg)
+
+    const isExternal =
+      ctaHref &&
+      (ctaHref.startsWith('http') ||
+        ctaHref.startsWith('mailto:') ||
+        ctaHref.startsWith('tel:'))
+
     return (
       <div
         ref={ref}
         className={cn(
-          'group grid grid-cols-1 md:grid-cols-12 rounded-[32px] border border-border/50 bg-white shadow-xs overflow-hidden w-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
+          'group grid grid-cols-1 md:grid-cols-12 rounded-[32px] border overflow-hidden w-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
+          isDark ? 'bg-zinc-950' : 'bg-white shadow-xs',
+          currentBorderClass,
           className,
         )}
         {...props}
@@ -481,8 +540,9 @@ export const ProductCardLarge = React.forwardRef<
         {/* Left Column */}
         <div
           className={cn(
-            'md:col-span-4 p-8 md:p-6 flex flex-col justify-between h-[480px] md:h-[580px] border-b md:border-b-0 border-border/50',
-            leftBgClass,
+            'md:col-span-4 p-8 md:p-6 flex flex-col justify-between h-[480px] md:h-[580px] border-b md:border-b-0',
+            currentBorderClass,
+            currentLeftBg,
           )}
         >
           {/* Header & Optional Badge */}
@@ -491,7 +551,10 @@ export const ProductCardLarge = React.forwardRef<
               <div className="flex items-center gap-3">
                 {/* App Icon */}
                 {icon && (
-                  <div className="size-11 rounded-xl bg-white shadow-xs flex items-center justify-center overflow-hidden shrink-0 border border-border/50">
+                  <div className={cn(
+                    'size-11 rounded-xl bg-white shadow-xs flex items-center justify-center overflow-hidden shrink-0 border border-border/50',
+                    iconClass
+                  )}>
                     {typeof icon === 'string' ? (
                       <img
                         src={icon}
@@ -505,10 +568,10 @@ export const ProductCardLarge = React.forwardRef<
                 )}
                 {/* App Info */}
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-[17px] font-semibold text-zinc-900 leading-tight">
+                  <span className={cn('text-[17px] font-semibold leading-tight', textTitleClass, titleClass)}>
                     {title}
                   </span>
-                  <span className="text-[13px] font-medium text-zinc-500 leading-none">
+                  <span className={cn('text-[13px] font-medium leading-none', textSubtitleClass, subtitleClass)}>
                     {subtitle}
                   </span>
                 </div>
@@ -518,7 +581,10 @@ export const ProductCardLarge = React.forwardRef<
               {href && (
                 <a
                   href={href}
-                  className="flex items-center justify-center size-8 rounded-full bg-white text-zinc-700 border border-border/50 shadow-xs hover:bg-zinc-50 hover:scale-105 transition-all duration-200"
+                  className={cn(
+                    'flex items-center justify-center size-8 rounded-full bg-white text-zinc-700 border border-border/50 shadow-xs hover:bg-zinc-50 hover:scale-105 transition-all duration-200',
+                    isDark && 'bg-zinc-800 text-zinc-200 border-zinc-700 hover:bg-zinc-700'
+                  )}
                   aria-label={`Open ${title}`}
                 >
                   <svg
@@ -547,7 +613,7 @@ export const ProductCardLarge = React.forwardRef<
               trendingBadge === true ? <LaurelWreathBadge /> : trendingBadge
             )}
 
-            <p className="text-[17.5px] leading-relaxed font-semibold text-zinc-800 tracking-tight">
+            <p className={cn('text-[17.5px] leading-relaxed font-semibold tracking-tight', textDescClass, descriptionClass)}>
               {description}
             </p>
 
@@ -562,9 +628,17 @@ export const ProductCardLarge = React.forwardRef<
           <Button
             asChild
             variant="outline"
-            className="rounded-full bg-white hover:bg-zinc-50 text-zinc-800 border-border/50 shadow-xs px-4.5 py-2.5 text-[13.5px] font-semibold transition-all duration-200 hover:-translate-y-[0.5px] h-auto"
+            className={cn(
+              'rounded-full bg-white hover:bg-zinc-50 text-zinc-800 border-border/50 shadow-xs px-4.5 py-2.5 text-[13.5px] font-semibold transition-all duration-200 hover:-translate-y-[0.5px] h-auto',
+              isDark && 'bg-zinc-800 hover:bg-zinc-700 text-zinc-100 border-zinc-700',
+              ctaClass
+            )}
           >
-            <Link to={ctaHref}>{ctaText}</Link>
+            {isExternal ? (
+              <a href={ctaHref}>{ctaText}</a>
+            ) : (
+              <Link to={ctaHref}>{ctaText}</Link>
+            )}
           </Button>
         </div>
 
@@ -572,13 +646,16 @@ export const ProductCardLarge = React.forwardRef<
         <div
           className={cn(
             'md:col-span-8 overflow-hidden h-[400px] md:h-[580px] relative select-none pt-8 pl-8 md:pt-14 md:pl-14',
-            rightBgClass || leftBgClass,
+            rightBgClass || currentLeftBg,
           )}
         >
           <img
             src={rightImage}
             alt={`${title} screenshot`}
-            className="w-full h-full object-cover object-left-top rounded-tl-[24px] border-t border-l border-border/50"
+            className={cn(
+              'w-full h-full object-cover object-left-top rounded-tl-xl border-t border-l',
+              currentBorderClass,
+            )}
             loading="lazy"
           />
         </div>

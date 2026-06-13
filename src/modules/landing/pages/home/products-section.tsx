@@ -55,58 +55,54 @@ export function ProductsSection() {
           </p>
         </div>
 
-        {/* Highlight Flagship App: Large Card */}
-        <ProductCardLarge
-          title="Snapzy"
-          subtitle="Utility"
-          description="Capture your screen with a lightweight, native macOS app. Privacy and locally."
-          icon={SnapzyIcon}
-          href="https://snapzy.app"
-          ctaText="Download for macOS"
-          ctaHref="https://snapzy.app"
-          rightImage="/og-image-snapzy.png"
-          leftBgClass="bg-[#0057C2]/5"
-          githubUrl="https://github.com/duongductrong/Snapzy"
-          stars="1k4"
-          downloads="21k"
-          trendingBadge={
-            <TrendshiftBadge
-              repositoryId="24550"
-              repoName="duongductrong/Snapzy"
-            />
-          }
-        />
+        {/* Highlight Flagship Apps: Large Cards */}
+        <div className="flex flex-col gap-8">
+          <ProductCardLarge
+            title="Snapzy"
+            subtitle="Utility"
+            description="Capture your screen with a lightweight, native macOS app. Privacy and locally."
+            icon={SnapzyIcon}
+            href="https://snapzy.app"
+            ctaText="Download for macOS"
+            ctaHref="https://snapzy.app"
+            rightImage="/og-image-snapzy.png"
+            leftBgClass="bg-[#0057C2]/5"
+            githubUrl="https://github.com/duongductrong/Snapzy"
+            stars="1k4"
+            downloads="21k"
+            trendingBadge={
+              <TrendshiftBadge
+                repositoryId="24550"
+                repoName="duongductrong/Snapzy"
+              />
+            }
+          />
 
-        {/* Showcase Apps Grid: Small Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Card 1: Aesthetic */}
-          <ProductCardSmall
+          <ProductCardLarge
             title="Aesthetic"
             subtitle="Design & Photography"
             description="A native, non-destructive macOS photo editor and manager."
             icon={AestheticIcon}
-            href="https://github.com/duongductrong/Aesthetic"
-            variant="solid"
-            bgClass="bg-zinc-900"
-            badges={[
-              {
-                label: 'macOS Native',
-                icon: (
-                  <span
-                    className="text-[11px] leading-none"
-                    role="img"
-                    aria-label="Laptop"
-                  >
-                    💻
-                  </span>
-                ),
-                bgClass:
-                  'bg-white/12 hover:bg-white/18 text-white border-white/5',
-              },
-            ]}
+            ctaText="Request Access"
+            ctaHref="mailto:info@edges.studio"
+            rightImage="/aesthetic-app.png"
+            leftBgClass="bg-zinc-950"
+            dark={true}
+            trendingBadge={
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-semibold bg-amber-500/10 text-amber-500 border border-amber-500/20 select-none w-fit">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500"></span>
+                </span>
+                <span>Private Beta</span>
+              </div>
+            }
           />
+        </div>
 
-          {/* Card 2: Droplit */}
+        {/* Showcase Apps Grid: Small Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Card 1: Droplit */}
           <ProductCardSmall
             title="Droplit"
             subtitle="Utility"
@@ -133,7 +129,7 @@ export function ProductsSection() {
             ]}
           />
 
-          {/* Card 3: Instantly */}
+          {/* Card 2: Instantly */}
           <ProductCardSmall
             title="Instantly"
             subtitle="AI Assistant"
@@ -160,6 +156,9 @@ export function ProductsSection() {
               },
             ]}
           />
+
+          {/* Card 3: Placeholder */}
+          <ProductCardSmall variant="placeholder" title="" />
         </div>
       </Container>
     </section>
