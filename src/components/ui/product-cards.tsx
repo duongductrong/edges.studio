@@ -726,7 +726,7 @@ export const ProductCardLarge = React.forwardRef<
         ) : rightImage ? (
           <div
             className={cn(
-              'md:col-span-8 overflow-hidden h-[400px] md:h-[580px] relative select-none pt-8 pl-8 md:pt-10 md:pl-10',
+              'md:col-span-8 overflow-hidden h-[400px] md:h-[580px] relative select-none pt-8 pl-6 md:pt-10',
               currentRightBg,
             )}
           >
