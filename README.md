@@ -54,13 +54,28 @@ npm run check
 
 This project uses the Cloudflare Vite plugin (configured in `vite.config.ts`) and `wrangler.jsonc`:
 
-1. Install Wrangler: `npm install -g wrangler`
-2. Authenticate: `wrangler login`
-3. Deploy: `npx wrangler deploy`
+### Manual Deployment
 
-For production env vars, run `wrangler secret put MY_VAR` for each secret listed in `.env.example`. Public (non-secret) vars go in `wrangler.jsonc` under `vars`.
+1. Install Wrangler: `pnpm install -g wrangler`
+2. Authenticate: `pnpm wrangler login`
+3. Deploy: `pnpm wrangler deploy`
+
+For production env vars, run `pnpm wrangler secret put MY_VAR` for each secret listed in `.env.example`. Public (non-secret) vars go in `wrangler.jsonc` under `vars`.
 
 KV, D1, R2, and Durable Object bindings are configured in `wrangler.jsonc` — see https://developers.cloudflare.com/workers/wrangler/configuration/.
+
+### Automated CI/CD Deployment
+
+Deployments are automated via GitHub Actions when pushes are made to the `master` branch. The workflow is defined in `.github/workflows/deploy.yml`.
+
+#### Prerequisites for CI/CD
+
+To enable automatic deployment, configure the following secrets in your GitHub Repository settings (**Settings > Secrets and variables > Actions**):
+
+1. **`CLOUDFLARE_API_TOKEN`**: A Cloudflare API token with permissions to edit Workers (use the "Edit Cloudflare Workers" template on Cloudflare).
+2. **`CLOUDFLARE_ACCOUNT_ID`**: Your Cloudflare Account ID.
+
+For runtime environment variables and secrets (e.g., `BETTER_AUTH_SECRET`), configure them in the Cloudflare dashboard under **Workers & Pages > tanstack-start-app > Settings > Variables**.
 
 
 ## Shadcn
