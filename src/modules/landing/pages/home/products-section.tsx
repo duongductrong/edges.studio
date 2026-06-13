@@ -85,9 +85,13 @@ export function ProductsSection() {
             icon={AestheticIcon}
             ctaText="Request Access"
             ctaHref="mailto:info@edges.studio"
-            rightImage="/aesthetic-app.png"
             leftBgClass="bg-zinc-950"
             dark={true}
+            rightImages={[
+              '/aesthetic-app.png',
+              '/aesthetic-app-welcome.png',
+              '/aesthetic-app-spotlight.png',
+            ]}
             trendingBadge={
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-semibold bg-amber-500/10 text-amber-500 border border-amber-500/20 select-none w-fit">
                 <span className="relative flex h-2.5 w-2.5">

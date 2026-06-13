@@ -2,6 +2,8 @@ import { cn } from '@/lib/utils.ts'
 import { Link } from '@tanstack/react-router'
 import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
+import useEmblaCarousel from 'embla-carousel-react'
+import Autoplay from 'embla-carousel-autoplay'
 import { ArrowUpRight, Download, Star } from 'lucide-react'
 import * as React from 'react'
 
@@ -500,6 +502,220 @@ export function ProductCardGithubStats({
   )
 }
 
+// ─── Carousel Config Type ──────────────────────────────────────────────────────
+
+export interface ProductCardCarouselConfig {
+  /** Auto-slide interval in ms. Default: 4000. Set 0 to disable. */
+  autoPlayInterval?: number
+  /** Show dot pagination indicators. Default: false */
+  showDots?: boolean
+  /** Transition effect. Default: 'slide' */
+  effect?: 'slide' | 'fade' | 'slide-fade'
+  /** Enable drag/swipe to change slides. Default: true */
+  draggable?: boolean
+  /** Pause autoplay on hover. Default: true */
+  pauseOnHover?: boolean
+}
+
+// ─── Internal Carousel Sub-Component ───────────────────────────────────────────
+
+interface ProductCardCarouselProps {
+  images: string[]
+  title: string
+  borderClass: string
+  bgClass: string
+  config: Required<ProductCardCarouselConfig>
+  isDark: boolean
+}
+
+function ProductCardCarousel({
+  images,
+  title,
+  borderClass,
+  bgClass,
+  config,
+  isDark,
+}: ProductCardCarouselProps) {
+  const isFade = config.effect === 'fade' || config.effect === 'slide-fade'
+
+  const plugins = React.useMemo(() => {
+    if (config.autoPlayInterval <= 0) return []
+    return [
+      Autoplay({
+        delay: config.autoPlayInterval,
+        stopOnInteraction: false,
+        stopOnMouseEnter: config.pauseOnHover,
+      }),
+    ]
+  }, [config.autoPlayInterval, config.pauseOnHover])
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: true,
+      dragFree: false,
+      watchDrag: config.draggable,
+      // For fade effect, disable scroll snapping animation
+      ...(isFade ? { duration: 0 } : {}),
+    },
+    plugins,
+  )
+
+  const [selectedIndex, setSelectedIndex] = React.useState(0)
+
+  const onSelect = React.useCallback(() => {
+    if (!emblaApi) return
+    setSelectedIndex(emblaApi.selectedScrollSnap())
+  }, [emblaApi])
+
+  React.useEffect(() => {
+    if (!emblaApi) return
+    onSelect()
+    emblaApi.on('select', onSelect)
+    return () => {
+      emblaApi.off('select', onSelect)
+    }
+  }, [emblaApi, onSelect])
+
+  const scrollTo = React.useCallback(
+    (index: number) => {
+      if (!emblaApi) return
+      emblaApi.scrollTo(index)
+    },
+    [emblaApi],
+  )
+
+  // For fade/slide-fade: render all slides stacked, use opacity transitions
+  if (isFade) {
+    return (
+      <div
+        className={cn(
+          'md:col-span-8 overflow-hidden h-[400px] md:h-[580px] relative select-none',
+          bgClass,
+        )}
+      >
+        {/* Stacked slides with opacity transitions */}
+        <div className="relative w-full h-full">
+          {images.map((img, idx) => (
+            <div
+              key={idx}
+              className={cn(
+                'absolute inset-0 pt-8 pl-6 md:pt-10 transition-opacity ease-[cubic-bezier(0.16,1,0.3,1)]',
+                config.effect === 'slide-fade' ? 'duration-700' : 'duration-500',
+                idx === selectedIndex ? 'opacity-100 z-10' : 'opacity-0 z-0',
+              )}
+            >
+              <img
+                src={img}
+                alt={`${title} screenshot ${idx + 1}`}
+                className={cn(
+                  'w-full h-full object-cover object-left-top rounded-tl-xl border-t border-l',
+                  borderClass,
+                )}
+                loading={idx === 0 ? 'eager' : 'lazy'}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Hidden embla container to drive the carousel state (slide selection, autoplay, drag) */}
+        <div
+          ref={emblaRef}
+          className="absolute inset-0 z-20 cursor-grab active:cursor-grabbing"
+          style={{ opacity: 0 }}
+        >
+          <div className="flex h-full">
+            {images.map((_, idx) => (
+              <div key={idx} className="flex-[0_0_100%] min-w-0" />
+            ))}
+          </div>
+        </div>
+
+        {/* Dot Pagination */}
+        {config.showDots && images.length > 1 && (
+          <div className="absolute bottom-4 left-0 right-0 z-30 flex justify-center gap-1.5">
+            {images.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => scrollTo(idx)}
+                className={cn(
+                  'size-1.5 rounded-full transition-all duration-300',
+                  idx === selectedIndex
+                    ? isDark
+                      ? 'bg-white w-4'
+                      : 'bg-foreground w-4'
+                    : isDark
+                      ? 'bg-white/40 hover:bg-white/60'
+                      : 'bg-foreground/25 hover:bg-foreground/40',
+                )}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  // Slide effect (default): standard Embla horizontal scroll
+  return (
+    <div
+      className={cn(
+        'md:col-span-8 overflow-hidden h-[400px] md:h-[580px] relative select-none',
+        bgClass,
+      )}
+    >
+      <div
+        ref={emblaRef}
+        className="h-full cursor-grab active:cursor-grabbing"
+      >
+        <div className="flex h-full">
+          {images.map((img, idx) => (
+            <div
+              key={idx}
+              className="flex-[0_0_100%] min-w-0 pt-8 pl-6 md:pt-10"
+            >
+              <img
+                src={img}
+                alt={`${title} screenshot ${idx + 1}`}
+                className={cn(
+                  'w-full h-full object-cover object-left-top rounded-tl-xl border-t border-l',
+                  borderClass,
+                )}
+                loading={idx === 0 ? 'eager' : 'lazy'}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Dot Pagination */}
+      {config.showDots && images.length > 1 && (
+        <div className="absolute bottom-4 left-0 right-0 z-10 flex justify-center gap-1.5">
+          {images.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => scrollTo(idx)}
+              className={cn(
+                'size-1.5 rounded-full transition-all duration-300',
+                idx === selectedIndex
+                  ? isDark
+                    ? 'bg-white w-4'
+                    : 'bg-foreground w-4'
+                  : isDark
+                    ? 'bg-white/40 hover:bg-white/60'
+                    : 'bg-foreground/25 hover:bg-foreground/40',
+              )}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ─── Large Card Variants ───────────────────────────────────────────────────────
 
 const largeCardVariants = cva(
@@ -528,6 +744,10 @@ export interface ProductCardLargeProps extends React.ComponentProps<'div'> {
   ctaText?: string
   ctaHref?: string
   rightImage?: string
+  /** Multiple images for carousel mode. Overrides rightImage when provided with 2+ items. */
+  rightImages?: string[]
+  /** Carousel configuration (only applies when rightImages has 2+ items) */
+  carousel?: ProductCardCarouselConfig
   githubUrl?: string
   stars?: string | number
   downloads?: string | number
@@ -574,6 +794,8 @@ export const ProductCardLarge = React.forwardRef<
       ctaHref = '#',
       leftBgClass,
       rightImage,
+      rightImages,
+      carousel: carouselConfig,
       rightBgClass,
       githubUrl,
       stars,
@@ -615,6 +837,19 @@ export const ProductCardLarge = React.forwardRef<
     const defaultLeftBg = isDark ? 'bg-zinc-900' : 'bg-muted/30'
     const currentLeftBg = branding?.cardBg || leftBgClass || defaultLeftBg
     const currentRightBg = rightBgClass || currentLeftBg
+
+    // Resolve carousel images: rightImages (2+) takes priority, else fallback to rightImage
+    const carouselImages =
+      rightImages && rightImages.length >= 2 ? rightImages : null
+
+    // Merge carousel config with defaults
+    const resolvedCarouselConfig: Required<ProductCardCarouselConfig> = {
+      autoPlayInterval: carouselConfig?.autoPlayInterval ?? 4000,
+      showDots: carouselConfig?.showDots ?? false,
+      effect: carouselConfig?.effect ?? 'slide',
+      draggable: carouselConfig?.draggable ?? true,
+      pauseOnHover: carouselConfig?.pauseOnHover ?? true,
+    }
 
     const isExternal =
       ctaHref &&
@@ -727,6 +962,15 @@ export const ProductCardLarge = React.forwardRef<
           <div className="md:col-span-8 overflow-hidden h-[400px] md:h-[580px] relative select-none">
             {mediaSlot}
           </div>
+        ) : carouselImages ? (
+          <ProductCardCarousel
+            images={carouselImages}
+            title={title}
+            borderClass={resolvedBorder}
+            bgClass={currentRightBg}
+            config={resolvedCarouselConfig}
+            isDark={isDark}
+          />
         ) : rightImage ? (
           <div
             className={cn(
