@@ -1,18 +1,18 @@
-import { cn } from '#/lib/utils.ts'
+import { cn } from '@/lib/utils.ts'
 import { Link } from '@tanstack/react-router'
 import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
 import { ArrowUpRight, Download, Star } from 'lucide-react'
 import * as React from 'react'
 
-import { Badge } from '#/components/ui/badge.tsx'
-import { Button } from '#/components/ui/button.tsx'
+import { Badge } from '@/components/ui/badge.tsx'
+import { Button } from '@/components/ui/button.tsx'
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
-} from '#/components/ui/card.tsx'
+} from '@/components/ui/card.tsx'
 
 // ─── Branding Config ───────────────────────────────────────────────────────────
 
@@ -57,6 +57,8 @@ function ExternalLinkButton({
   return (
     <a
       href={href}
+      target="_blank"
+      rel="noopener noreferrer"
       className={cn(
         'flex items-center justify-center size-8 rounded-full border transition-all duration-200 hover:scale-105',
         isDark
@@ -709,7 +711,9 @@ export const ProductCardLarge = React.forwardRef<
               className={cn(ctaClass)}
             >
               {isExternal ? (
-                <a href={ctaHref}>{ctaText}</a>
+                <a href={ctaHref} target="_blank" rel="noopener noreferrer">
+                  {ctaText}
+                </a>
               ) : (
                 <Link to={ctaHref}>{ctaText}</Link>
               )}

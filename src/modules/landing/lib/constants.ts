@@ -7,8 +7,8 @@ export const CONTACT_EMAIL = 'info@edges.studio'
 export const COMPANY_NAME = 'edges.studio'
 
 export const NAV_LINKS = [
-  { label: 'Privacy', to: '/privacy' as const },
-  { label: 'Terms', to: '/terms' as const },
+  { label: 'Privacy Policy', to: '/privacy' as const },
+  { label: 'Terms of Service', to: '/terms' as const },
 ] as const
 
 export const CTA_PRIMARY_URL = '#products'

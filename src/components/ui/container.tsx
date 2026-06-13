@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Slot } from 'radix-ui'
 
-import { cn } from '#/lib/utils.ts'
+import { cn } from '@/lib/utils.ts'
 
 export interface ContainerProps extends React.ComponentProps<'div'> {
   asChild?: boolean

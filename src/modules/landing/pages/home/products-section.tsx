@@ -1,9 +1,9 @@
-import { Container } from '#/components/ui/container'
+import { Container } from '@/components/ui/container'
 import {
   ProductCardLarge,
   ProductCardSmall,
   TrendshiftBadge,
-} from '#/components/ui/product-cards'
+} from '@/components/ui/product-cards'
 
 // Snapzy App Icon
 const SnapzyIcon = (
@@ -44,11 +44,11 @@ export function ProductsSection() {
     <section id="products" className="py-20 md:py-28">
       <Container className="space-y-14">
         {/* Section Header */}
-        <div className="space-y-3">
+        <div className="space-y-3 text-center">
           <h2 className="text-3xl font-semibold tracking-tight text-zinc-900 sm:text-4xl">
             Our Products
           </h2>
-          <p className="text-zinc-500 max-w-xl text-base">
+          <p className="text-zinc-500 max-w-xl mx-auto text-base">
             Explore premium apps developed by edges.studio. We craft tools that
             blend seamlessly into your workflow with elegant design and deep
             utility.

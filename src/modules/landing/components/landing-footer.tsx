@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 
-import { Container } from '#/components/ui/container'
+import { Container } from '@/components/ui/container'
 
 import { COMPANY_NAME, CONTACT_EMAIL, FOOTER_LINKS } from '../lib/constants'
 
@@ -43,7 +43,7 @@ export function LandingFooter() {
           </div>
         </div>
 
-        <p className="text-xs text-muted-foreground mt-8">
+        <p className="text-sm text-muted-foreground mt-8">
           &copy; {year} {COMPANY_NAME}. All rights reserved.
         </p>
       </Container>

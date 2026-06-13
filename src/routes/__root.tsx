@@ -1,5 +1,7 @@
+import { useEffect } from 'react'
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 
+import { TooltipProvider } from '@/components/ui/tooltip'
 import appCss from '../styles.css?url'
 
 export const Route = createRootRoute({
@@ -35,13 +37,51 @@ export const Route = createRootRoute({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    const handleExternalClicks = (e: MouseEvent) => {
+      const anchor = (e.target as HTMLElement).closest('a')
+      if (anchor && anchor.href) {
+        const href = anchor.getAttribute('href')
+        if (href) {
+          // Ignore relative links, anchors, mailto, tel, and javascript
+          if (
+            href.startsWith('/') ||
+            href.startsWith('#') ||
+            href.startsWith('.') ||
+            href.startsWith('mailto:') ||
+            href.startsWith('tel:') ||
+            href.startsWith('javascript:')
+          ) {
+            return
+          }
+
+          try {
+            const url = new URL(href, window.location.origin)
+            // Open in a new tab if it's a different origin
+            if (url.origin !== window.location.origin) {
+              anchor.setAttribute('target', '_blank')
+              anchor.setAttribute('rel', 'noopener noreferrer')
+            }
+          } catch (err) {
+            // Ignore URL parsing errors
+          }
+        }
+      }
+    }
+
+    document.addEventListener('click', handleExternalClicks, { capture: true })
+    return () => {
+      document.removeEventListener('click', handleExternalClicks, { capture: true })
+    }
+  }, [])
+
   return (
     <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body className="min-h-screen bg-background font-sans antialiased">
-        {children}
+        <TooltipProvider>{children}</TooltipProvider>
         <Scripts />
       </body>
     </html>

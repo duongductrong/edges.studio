@@ -1,14 +1,19 @@
 import { Link } from '@tanstack/react-router'
 
-import { Button } from '#/components/ui/button'
-import { Container } from '#/components/ui/container'
+import { Button } from '@/components/ui/button'
+import { Container } from '@/components/ui/container'
 import {
   Sheet,
   SheetContent,
   SheetTitle,
   SheetTrigger,
-} from '#/components/ui/sheet'
+} from '@/components/ui/sheet'
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { COMPANY_NAME, NAV_LINKS } from '../lib/constants'
 
 function Logo() {
@@ -74,9 +79,19 @@ function MobileNav() {
             </Link>
           ))}
           <div className="my-3 h-px bg-border" />
-          <Button className="justify-center rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-900 border-none shadow-none">
-            Login
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                className="justify-center rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-900 border-none shadow-none"
+                disabled
+              >
+                Login
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              Login is currently unavailable. Please check back later.
+            </TooltipContent>
+          </Tooltip>
         </nav>
       </SheetContent>
     </Sheet>
@@ -93,9 +108,19 @@ export function LandingHeader() {
           <DesktopNav />
 
           <div className="hidden md:block">
-            <Button className="rounded-full bg-zinc-100 hover:bg-zinc-200/90 text-zinc-900 font-semibold text-[13px] px-4 py-1 h-8.5 border-none shadow-none">
-              Login
-            </Button>
+            <Tooltip>
+              <TooltipTrigger>
+                <Button
+                  className="justify-center rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-900 border-none shadow-none"
+                  disabled
+                >
+                  Login
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                Currently unavailable.
+              </TooltipContent>
+            </Tooltip>
           </div>
 
           <MobileNav />
