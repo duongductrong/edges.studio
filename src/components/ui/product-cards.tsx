@@ -1,7 +1,7 @@
 import { cn } from '#/lib/utils.ts'
 import { Link } from '@tanstack/react-router'
-import { cva } from 'class-variance-authority'
 import type { VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
 import { ArrowUpRight, Download, Star } from 'lucide-react'
 import * as React from 'react'
 
@@ -58,7 +58,7 @@ function ExternalLinkButton({
     <a
       href={href}
       className={cn(
-        'flex items-center justify-center size-8 rounded-full shadow-xs border transition-all duration-200 hover:scale-105',
+        'flex items-center justify-center size-8 rounded-full border transition-all duration-200 hover:scale-105',
         isDark
           ? 'bg-white/95 text-foreground border-transparent hover:bg-white'
           : 'bg-card text-muted-foreground border-border/50 hover:bg-accent',
@@ -704,13 +704,9 @@ export const ProductCardLarge = React.forwardRef<
           <CardFooter className="p-0 flex-col items-start gap-2">
             <Button
               asChild
+              rounded="full"
               variant="outline"
-              className={cn(
-                'rounded-full shadow-xs px-4.5 py-2.5 text-[13.5px] font-semibold transition-all duration-200 hover:-translate-y-[0.5px] h-auto',
-                isDark &&
-                  'bg-zinc-800 hover:bg-zinc-700 text-zinc-100 border-zinc-700',
-                ctaClass,
-              )}
+              className={cn(ctaClass)}
             >
               {isExternal ? (
                 <a href={ctaHref}>{ctaText}</a>
@@ -730,7 +726,7 @@ export const ProductCardLarge = React.forwardRef<
         ) : rightImage ? (
           <div
             className={cn(
-              'md:col-span-8 overflow-hidden h-[400px] md:h-[580px] relative select-none pt-8 pl-8 md:pt-14 md:pl-14',
+              'md:col-span-8 overflow-hidden h-[400px] md:h-[580px] relative select-none pt-8 pl-8 md:pt-10 md:pl-10',
               currentRightBg,
             )}
           >
