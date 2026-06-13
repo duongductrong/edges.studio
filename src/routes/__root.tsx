@@ -1,100 +1,29 @@
-/// <reference types="vite/client" />
-import {
-  HeadContent,
-  Outlet,
-  Scripts,
-  createRootRouteWithContext,
-} from "@tanstack/react-router";
-import * as React from "react";
-import type { QueryClient } from "@tanstack/react-query";
-import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
-import { NotFound } from "~/components/NotFound";
-import appCss from "~/styles/app.css?url";
-import { seo } from "~/utils/seo";
+import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 
-export const Route = createRootRouteWithContext<{
-  queryClient: QueryClient;
-}>()({
+import appCss from '../styles.css?url'
+
+export const Route = createRootRoute({
   head: () => ({
     meta: [
-      {
-        charSet: "utf-8",
-      },
-      {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1",
-      },
-      ...seo({
-        title: "edges.studio — Crafting Premium Digital Products",
-        description:
-          "edges.studio builds premium desktop and web applications with meticulous attention to detail.",
-      }),
+      { charSet: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { title: 'edges.studio' },
     ],
-    links: [
-      { rel: "stylesheet", href: appCss },
-      {
-        rel: "preconnect",
-        href: "https://fonts.googleapis.com",
-      },
-      {
-        rel: "preconnect",
-        href: "https://fonts.gstatic.com",
-        crossOrigin: "anonymous",
-      },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=DM+Serif+Display&family=Inter:wght@400;500;600;700;800&display=swap",
-      },
-      {
-        rel: "apple-touch-icon",
-        sizes: "180x180",
-        href: "/apple-touch-icon.png",
-      },
-      {
-        rel: "icon",
-        type: "image/png",
-        sizes: "32x32",
-        href: "/favicon-32x32.png",
-      },
-      {
-        rel: "icon",
-        type: "image/png",
-        sizes: "16x16",
-        href: "/favicon-16x16.png",
-      },
-      { rel: "manifest", href: "/site.webmanifest", color: "#fffff" },
-      { rel: "icon", href: "/favicon.ico" },
-    ],
+    links: [{ rel: 'stylesheet', href: appCss }],
   }),
-  errorComponent: (props) => {
-    return (
-      <RootDocument>
-        <DefaultCatchBoundary {...props} />
-      </RootDocument>
-    );
-  },
-  notFoundComponent: () => <NotFound />,
-  component: RootComponent,
-});
-
-function RootComponent() {
-  return (
-    <RootDocument>
-      <Outlet />
-    </RootDocument>
-  );
-}
+  shellComponent: RootDocument,
+})
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html>
+    <html lang="en">
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="min-h-screen bg-background font-sans antialiased">
         {children}
         <Scripts />
       </body>
     </html>
-  );
+  )
 }

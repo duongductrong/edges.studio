@@ -9,115 +9,86 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as LayoutRouteImport } from './routes/_layout'
-import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
-import { Route as LayoutTermsRouteImport } from './routes/_layout/terms'
-import { Route as LayoutPrivacyRouteImport } from './routes/_layout/privacy'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as IndexRouteImport } from './routes/index'
 
-const LayoutRoute = LayoutRouteImport.update({
-  id: '/_layout',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LayoutIndexRoute = LayoutIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => LayoutRoute,
-} as any)
-const LayoutTermsRoute = LayoutTermsRouteImport.update({
+const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
-  getParentRoute: () => LayoutRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const LayoutPrivacyRoute = LayoutPrivacyRouteImport.update({
+const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
-  getParentRoute: () => LayoutRoute,
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof LayoutIndexRoute
-  '/privacy': typeof LayoutPrivacyRoute
-  '/terms': typeof LayoutTermsRoute
+  '/': typeof IndexRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
 }
 export interface FileRoutesByTo {
-  '/privacy': typeof LayoutPrivacyRoute
-  '/terms': typeof LayoutTermsRoute
-  '/': typeof LayoutIndexRoute
+  '/': typeof IndexRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_layout': typeof LayoutRouteWithChildren
-  '/_layout/privacy': typeof LayoutPrivacyRoute
-  '/_layout/terms': typeof LayoutTermsRoute
-  '/_layout/': typeof LayoutIndexRoute
+  '/': typeof IndexRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths: '/' | '/privacy' | '/terms'
   fileRoutesByTo: FileRoutesByTo
-  to: '/privacy' | '/terms' | '/'
-  id:
-    | '__root__'
-    | '/_layout'
-    | '/_layout/privacy'
-    | '/_layout/terms'
-    | '/_layout/'
+  to: '/' | '/privacy' | '/terms'
+  id: '__root__' | '/' | '/privacy' | '/terms'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  LayoutRoute: typeof LayoutRouteWithChildren
+  IndexRoute: typeof IndexRoute
+  PrivacyRoute: typeof PrivacyRoute
+  TermsRoute: typeof TermsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_layout': {
-      id: '/_layout'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof LayoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_layout/': {
-      id: '/_layout/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof LayoutIndexRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/terms': {
-      id: '/_layout/terms'
+    '/terms': {
+      id: '/terms'
       path: '/terms'
       fullPath: '/terms'
-      preLoaderRoute: typeof LayoutTermsRouteImport
-      parentRoute: typeof LayoutRoute
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_layout/privacy': {
-      id: '/_layout/privacy'
+    '/privacy': {
+      id: '/privacy'
       path: '/privacy'
       fullPath: '/privacy'
-      preLoaderRoute: typeof LayoutPrivacyRouteImport
-      parentRoute: typeof LayoutRoute
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface LayoutRouteChildren {
-  LayoutPrivacyRoute: typeof LayoutPrivacyRoute
-  LayoutTermsRoute: typeof LayoutTermsRoute
-  LayoutIndexRoute: typeof LayoutIndexRoute
-}
-
-const LayoutRouteChildren: LayoutRouteChildren = {
-  LayoutPrivacyRoute: LayoutPrivacyRoute,
-  LayoutTermsRoute: LayoutTermsRoute,
-  LayoutIndexRoute: LayoutIndexRoute,
-}
-
-const LayoutRouteWithChildren =
-  LayoutRoute._addFileChildren(LayoutRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
-  LayoutRoute: LayoutRouteWithChildren,
+  IndexRoute: IndexRoute,
+  PrivacyRoute: PrivacyRoute,
+  TermsRoute: TermsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

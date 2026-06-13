@@ -1,27 +1,20 @@
-import { motion } from "motion/react";
-
 export function PrivacyPolicy() {
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.1 }}
-      className="mx-auto max-w-3xl px-6 pt-32 pb-24"
-    >
+    <article className="mx-auto max-w-3xl px-6 pt-32 pb-24">
       <header className="mb-12">
-        <h1 className="text-4xl font-semibold tracking-tight text-gray-900 md:text-5xl">
+        <h1 className="text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
           Privacy Policy
         </h1>
-        <p className="mt-4 text-base text-gray-500">
+        <p className="mt-4 text-base text-muted-foreground">
           Your privacy matters to us. This policy explains how edges.studio
           handles information across our products and website.
         </p>
       </header>
 
-      <div className="space-y-10 text-[15px] leading-relaxed text-gray-700">
+      <div className="space-y-10 text-[15px] leading-relaxed text-foreground">
         {/* 1 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             1. Who We Are
           </h2>
           <p>
@@ -33,21 +26,21 @@ export function PrivacyPolicy() {
 
         {/* 2 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             2. Information We Collect
           </h2>
 
-          <h3 className="mb-2 mt-4 text-sm font-semibold uppercase tracking-wider text-gray-500">
+          <h3 className="mb-2 mt-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             Desktop & Mobile Applications
           </h3>
           <p>
-            Our desktop applications are designed with a{" "}
+            Our desktop applications are designed with a{' '}
             <strong>privacy-first</strong> approach. Screenshots, recordings,
-            annotations, and any files you create are processed and stored{" "}
+            annotations, and any files you create are processed and stored{' '}
             <strong>locally on your device</strong>. We do not upload, transmit,
             or have access to your captured content.
           </p>
-          <ul className="mt-3 list-inside list-disc space-y-1.5 text-gray-600">
+          <ul className="mt-3 list-inside list-disc space-y-1.5 text-muted-foreground">
             <li>No content is sent to our servers</li>
             <li>No personal files or media are collected</li>
             <li>
@@ -56,14 +49,14 @@ export function PrivacyPolicy() {
             </li>
           </ul>
 
-          <h3 className="mb-2 mt-6 text-sm font-semibold uppercase tracking-wider text-gray-500">
+          <h3 className="mb-2 mt-6 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             Website (edges.studio)
           </h3>
           <p>
             When you visit our website we may collect standard web analytics
             data, including:
           </p>
-          <ul className="mt-3 list-inside list-disc space-y-1.5 text-gray-600">
+          <ul className="mt-3 list-inside list-disc space-y-1.5 text-muted-foreground">
             <li>
               Pages visited, referring URL, browser type, and device information
             </li>
@@ -77,11 +70,11 @@ export function PrivacyPolicy() {
 
         {/* 3 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             3. How We Use Information
           </h2>
           <p>Any information we collect is used exclusively to:</p>
-          <ul className="mt-3 list-inside list-disc space-y-1.5 text-gray-600">
+          <ul className="mt-3 list-inside list-disc space-y-1.5 text-muted-foreground">
             <li>Improve and maintain our products and services</li>
             <li>Understand aggregate usage patterns on our website</li>
             <li>Diagnose and fix technical issues</li>
@@ -95,7 +88,7 @@ export function PrivacyPolicy() {
 
         {/* 4 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             4. Third-Party Services
           </h2>
           <p>
@@ -112,7 +105,7 @@ export function PrivacyPolicy() {
 
         {/* 5 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             5. Cookies
           </h2>
           <p>
@@ -125,7 +118,7 @@ export function PrivacyPolicy() {
 
         {/* 6 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             6. Data Retention
           </h2>
           <p>
@@ -138,16 +131,16 @@ export function PrivacyPolicy() {
 
         {/* 7 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             7. Your Rights
           </h2>
           <p>
             Depending on your jurisdiction, you may have the right to access,
             correct, delete, or restrict the processing of any personal data we
-            hold about you. To exercise these rights, please contact us at{" "}
+            hold about you. To exercise these rights, please contact us at{' '}
             <a
               href="mailto:info@edges.studio"
-              className="text-blue-600 underline decoration-blue-300 underline-offset-2 transition-colors hover:text-blue-800"
+              className="text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:text-primary/80"
             >
               info@edges.studio
             </a>
@@ -157,7 +150,7 @@ export function PrivacyPolicy() {
 
         {/* 8 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             8. Children's Privacy
           </h2>
           <p>
@@ -170,7 +163,7 @@ export function PrivacyPolicy() {
 
         {/* 9 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             9. Changes to This Policy
           </h2>
           <p>
@@ -182,15 +175,15 @@ export function PrivacyPolicy() {
 
         {/* 10 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             10. Contact Us
           </h2>
           <p>
             If you have any questions or concerns about this Privacy Policy,
-            please reach out to us at{" "}
+            please reach out to us at{' '}
             <a
               href="mailto:info@edges.studio"
-              className="text-blue-600 underline decoration-blue-300 underline-offset-2 transition-colors hover:text-blue-800"
+              className="text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:text-primary/80"
             >
               info@edges.studio
             </a>
@@ -198,6 +191,6 @@ export function PrivacyPolicy() {
           </p>
         </section>
       </div>
-    </motion.article>
-  );
+    </article>
+  )
 }

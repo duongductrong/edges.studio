@@ -1,27 +1,20 @@
-import { motion } from "motion/react";
-
 export function TermsOfService() {
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.1 }}
-      className="mx-auto max-w-3xl px-6 pt-32 pb-24"
-    >
+    <article className="mx-auto max-w-3xl px-6 pt-32 pb-24">
       <header className="mb-12">
-        <h1 className="text-4xl font-semibold tracking-tight text-gray-900 md:text-5xl">
+        <h1 className="text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
           Terms of Service
         </h1>
-        <p className="mt-4 text-base text-gray-500">
+        <p className="mt-4 text-base text-muted-foreground">
           Please read these terms carefully before using any edges.studio
           product or service.
         </p>
       </header>
 
-      <div className="space-y-10 text-[15px] leading-relaxed text-gray-700">
+      <div className="space-y-10 text-[15px] leading-relaxed text-foreground">
         {/* 1 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             1. Acceptance of Terms
           </h2>
           <p>
@@ -34,16 +27,16 @@ export function TermsOfService() {
 
         {/* 2 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             2. Products &amp; Services
           </h2>
           <p>
             edges.studio develops premium desktop, mobile, and web applications.
             These Terms apply to all products and services developed and
-            published by edges.studio, including the{" "}
+            published by edges.studio, including the{' '}
             <a
               href="https://edges.studio"
-              className="text-blue-600 underline decoration-blue-300 underline-offset-2 transition-colors hover:text-blue-800"
+              className="text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:text-primary/80"
             >
               edges.studio website
             </a>
@@ -57,7 +50,7 @@ export function TermsOfService() {
 
         {/* 3 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             3. Licence &amp; Usage Rights
           </h2>
           <p>
@@ -70,7 +63,7 @@ export function TermsOfService() {
           <p className="mt-3">
             You agree <strong>not</strong> to:
           </p>
-          <ul className="mt-3 list-inside list-disc space-y-1.5 text-gray-600">
+          <ul className="mt-3 list-inside list-disc space-y-1.5 text-muted-foreground">
             <li>
               Reverse-engineer, decompile, or disassemble any edges.studio
               product
@@ -92,7 +85,7 @@ export function TermsOfService() {
 
         {/* 4 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             4. Intellectual Property
           </h2>
           <p>
@@ -111,11 +104,11 @@ export function TermsOfService() {
 
         {/* 5 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             5. User Responsibilities
           </h2>
           <p>By using our products and services, you agree to:</p>
-          <ul className="mt-3 list-inside list-disc space-y-1.5 text-gray-600">
+          <ul className="mt-3 list-inside list-disc space-y-1.5 text-muted-foreground">
             <li>
               Use them only for lawful purposes and in compliance with all
               applicable laws
@@ -132,25 +125,25 @@ export function TermsOfService() {
 
         {/* 6 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             6. Payments, Refunds &amp; Credits
           </h2>
           <p>
-            edges.studio uses{" "}
+            edges.studio uses{' '}
             <a
               href="https://polar.sh"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 underline decoration-blue-300 underline-offset-2 transition-colors hover:text-blue-800"
+              className="text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:text-primary/80"
             >
               Polar
-            </a>{" "}
+            </a>{' '}
             as its Merchant of Record to process all payments, manage credits,
             and handle billing for our products and services. By making a
             purchase, you agree to the following refund terms:
           </p>
 
-          <ul className="mt-3 list-inside list-disc space-y-1.5 text-gray-600">
+          <ul className="mt-3 list-inside list-disc space-y-1.5 text-muted-foreground">
             <li>
               <strong>Full &amp; partial refunds</strong> — We may issue full or
               partial refunds at our discretion. However, the initial
@@ -181,7 +174,7 @@ export function TermsOfService() {
 
         {/* 7 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             7. Disputes &amp; Chargebacks
           </h2>
           <p>
@@ -189,12 +182,12 @@ export function TermsOfService() {
             purchase made via edges.studio, the following terms apply:
           </p>
 
-          <ul className="mt-3 list-inside list-disc space-y-1.5 text-gray-600">
+          <ul className="mt-3 list-inside list-disc space-y-1.5 text-muted-foreground">
             <li>
-              <strong>Dispute fee</strong> — Each dispute incurs a{" "}
+              <strong>Dispute fee</strong> — Each dispute incurs a{' '}
               <strong>$15&nbsp;USD fee per dispute</strong>, regardless of the
               outcome. This fee is imposed by the underlying credit-card
-              networks and payment service providers and{" "}
+              networks and payment service providers and{' '}
               <strong>cannot be waived or refunded</strong>.
             </li>
             <li>
@@ -207,13 +200,13 @@ export function TermsOfService() {
             </li>
             <li>
               <strong>Good-faith resolution</strong> — We strongly encourage
-              customers to contact us at{" "}
+              customers to contact us at{' '}
               <a
                 href="mailto:info@edges.studio"
-                className="text-blue-600 underline decoration-blue-300 underline-offset-2 transition-colors hover:text-blue-800"
+                className="text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:text-primary/80"
               >
                 info@edges.studio
-              </a>{" "}
+              </a>{' '}
               before filing a dispute. In most cases, we can resolve issues
               faster and more favourably through direct communication.
             </li>
@@ -230,11 +223,11 @@ export function TermsOfService() {
 
         {/* 8 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             8. Disclaimer of Warranties
           </h2>
           <p>
-            Our products and services are provided{" "}
+            Our products and services are provided{' '}
             <strong>"as is" and "as available"</strong> without warranties of
             any kind, whether express or implied, including but not limited to
             implied warranties of merchantability, fitness for a particular
@@ -248,7 +241,7 @@ export function TermsOfService() {
 
         {/* 7 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             9. Limitation of Liability
           </h2>
           <p>
@@ -262,7 +255,7 @@ export function TermsOfService() {
 
         {/* 10 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             10. Termination
           </h2>
           <p>
@@ -280,7 +273,7 @@ export function TermsOfService() {
 
         {/* 11 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             11. Changes to These Terms
           </h2>
           <p>
@@ -293,7 +286,7 @@ export function TermsOfService() {
 
         {/* 12 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             12. Governing Law
           </h2>
           <p>
@@ -305,15 +298,15 @@ export function TermsOfService() {
 
         {/* 13 */}
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-gray-900">
+          <h2 className="mb-3 text-lg font-semibold text-foreground">
             13. Contact Us
           </h2>
           <p>
             If you have any questions about these Terms of Service, please
-            contact us at{" "}
+            contact us at{' '}
             <a
               href="mailto:info@edges.studio"
-              className="text-blue-600 underline decoration-blue-300 underline-offset-2 transition-colors hover:text-blue-800"
+              className="text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:text-primary/80"
             >
               info@edges.studio
             </a>
@@ -321,6 +314,6 @@ export function TermsOfService() {
           </p>
         </section>
       </div>
-    </motion.article>
-  );
+    </article>
+  )
 }
