@@ -2,6 +2,7 @@ import { Container } from '#/components/ui/container'
 import {
   ProductCardLarge,
   ProductCardSmall,
+  TrendshiftBadge,
 } from '#/components/ui/product-cards'
 
 // Snapzy App Icon
@@ -65,6 +66,15 @@ export function ProductsSection() {
           ctaHref="https://snapzy.app"
           rightImage="/og-image-snapzy.png"
           leftBgClass="bg-[#0057C2]/5"
+          githubUrl="https://github.com/duongductrong/Snapzy"
+          stars="1k4"
+          downloads="21k"
+          trendingBadge={
+            <TrendshiftBadge
+              repositoryId="24550"
+              repoName="duongductrong/Snapzy"
+            />
+          }
         />
 
         {/* Showcase Apps Grid: Small Cards */}
