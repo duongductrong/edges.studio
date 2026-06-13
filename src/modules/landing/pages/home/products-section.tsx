@@ -156,9 +156,6 @@ export function ProductsSection() {
               },
             ]}
           />
-
-          {/* Card 3: Placeholder */}
-          <ProductCardSmall variant="placeholder" title="" />
         </div>
       </Container>
     </section>

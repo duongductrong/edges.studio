@@ -1,61 +1,150 @@
 import { cn } from '#/lib/utils.ts'
 import { Link } from '@tanstack/react-router'
+import { cva } from 'class-variance-authority'
+import type { VariantProps } from 'class-variance-authority'
+import { ArrowUpRight, Download, Star } from 'lucide-react'
 import * as React from 'react'
+
+import { Badge } from '#/components/ui/badge.tsx'
 import { Button } from '#/components/ui/button.tsx'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from '#/components/ui/card.tsx'
+
+// ─── Branding Config ───────────────────────────────────────────────────────────
+
+export interface BrandingConfig {
+  /** Card background override (Tailwind class, e.g. 'bg-sky-50') */
+  cardBg?: string
+  /** Card foreground/text override (Tailwind class) */
+  cardForeground?: string
+  /** Accent color class for badges/highlights */
+  accent?: string
+  /** Accent foreground text color */
+  accentForeground?: string
+  /** Border color override */
+  border?: string
+}
+
+// ─── Card Badge ────────────────────────────────────────────────────────────────
 
 export interface CardBadge {
   label: string
   icon?: React.ReactNode
+  className?: string
+  /** @deprecated Use className instead */
   bgClass?: string
+  /** @deprecated Use className instead */
   textClass?: string
 }
 
-export interface ProductCardSmallProps extends React.ComponentProps<'div'> {
+// ─── External Link Icon ────────────────────────────────────────────────────────
+
+function ExternalLinkButton({
+  href,
+  label,
+  isDark,
+  className,
+}: {
+  href: string
+  label: string
+  isDark: boolean
+  className?: string
+}) {
+  return (
+    <a
+      href={href}
+      className={cn(
+        'flex items-center justify-center size-8 rounded-full shadow-xs border transition-all duration-200 hover:scale-105',
+        isDark
+          ? 'bg-white/95 text-foreground border-transparent hover:bg-white'
+          : 'bg-card text-muted-foreground border-border/50 hover:bg-accent',
+        className,
+      )}
+      aria-label={label}
+    >
+      <ArrowUpRight className="size-3.5 stroke-[1.75]" />
+    </a>
+  )
+}
+
+// ─── App Icon Container ────────────────────────────────────────────────────────
+
+function AppIcon({
+  icon,
+  alt,
+  className,
+}: {
+  icon: string | React.ReactNode
+  alt: string
+  className?: string
+}) {
+  return (
+    <div
+      className={cn(
+        'size-11 rounded-xl bg-card shadow-xs flex items-center justify-center overflow-hidden shrink-0 border border-border/50',
+        className,
+      )}
+    >
+      {typeof icon === 'string' ? (
+        <img src={icon} alt={alt} className="size-full object-cover" />
+      ) : (
+        icon
+      )}
+    </div>
+  )
+}
+
+// ─── Small Card Variants ───────────────────────────────────────────────────────
+
+const smallCardVariants = cva(
+  'flex flex-col gap-0 p-0 h-[380px] w-full rounded-[28px] relative overflow-hidden shadow-xs transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
+  {
+    variants: {
+      variant: {
+        solid: '',
+        image: '',
+        placeholder: 'items-center justify-between bg-card',
+      },
+    },
+    defaultVariants: {
+      variant: 'solid',
+    },
+  },
+)
+
+// ─── ProductCardSmall ──────────────────────────────────────────────────────────
+
+export interface ProductCardSmallProps
+  extends React.ComponentProps<'div'>, VariantProps<typeof smallCardVariants> {
   title: string
   subtitle?: string
   description?: string
   icon?: string | React.ReactNode
   href?: string
   variant?: 'solid' | 'image' | 'placeholder'
-  bgClass?: string
   bgImage?: string
-  textColor?: 'light' | 'dark'
   theme?: 'light' | 'dark'
-  titleClass?: string
-  subtitleClass?: string
-  descriptionClass?: string
-  borderClass?: string
-  iconClass?: string
+  branding?: BrandingConfig
   badges?: CardBadge[]
-}
+  /** Slot: extra content in header area */
+  headerExtra?: React.ReactNode
+  /** Slot: extra content in footer area */
+  footerExtra?: React.ReactNode
 
-export interface ProductCardLargeProps extends React.ComponentProps<'div'> {
-  title: string
-  subtitle: string
-  description: string
-  icon: string | React.ReactNode
-  href?: string
-  ctaText?: string
-  ctaHref?: string
-  leftBgClass?: string
-  rightImage: string
-  rightBgClass?: string
-  githubUrl?: string
-  stars?: string | number
-  downloads?: string | number
-  trendingBadge?: boolean | React.ReactNode
-  dark?: boolean
-  theme?: 'light' | 'dark'
+  // Legacy class overrides (still supported for backward compat)
+  bgClass?: string
   textColor?: 'light' | 'dark'
   titleClass?: string
   subtitleClass?: string
   descriptionClass?: string
   borderClass?: string
   iconClass?: string
-  ctaClass?: string
 }
 
-// Small Card Component
 export const ProductCardSmall = React.forwardRef<
   HTMLDivElement,
   ProductCardSmallProps
@@ -69,68 +158,44 @@ export const ProductCardSmall = React.forwardRef<
       icon,
       href,
       variant = 'solid',
-      bgClass = 'bg-zinc-100',
+      bgClass,
       bgImage,
       textColor,
       theme,
+      branding,
       titleClass,
       subtitleClass,
       descriptionClass,
       borderClass,
       iconClass,
       badges = [],
+      headerExtra,
+      footerExtra,
       ...props
     },
     ref,
   ) => {
-    // Determine text colors based on theme / background variant
-    const isDark = theme === 'dark' || textColor === 'light' || (
-      !theme && !textColor && (
-        variant === 'image' ||
-        bgClass.includes('bg-blue') ||
-        bgClass.includes('bg-black') ||
-        bgClass.includes('bg-zinc-900') ||
-        bgClass.includes('bg-indigo')
-      )
-    )
-    const textThemeClass = isDark ? 'text-white' : 'text-zinc-900'
-    const subtitleThemeClass = isDark ? 'text-white/60' : 'text-zinc-500'
-    const descThemeClass = isDark ? 'text-white/90' : 'text-zinc-600'
-    const currentBorderClass = borderClass || 'border-border/50'
+    // Theme resolution: explicit theme > explicit textColor > default light
+    const isDark = theme === 'dark' || textColor === 'light'
 
-    if (variant === 'placeholder') {
-      return (
-        <div
-          ref={ref}
-          className={cn(
-            'flex flex-col justify-between items-center p-6 h-[380px] w-full rounded-[28px] border bg-white shadow-xs select-none',
-            currentBorderClass,
-            className,
-          )}
-          {...props}
-        >
-          <div />
-          {/* Centered Dots */}
-          <div className="flex gap-2 items-center my-auto">
-            <span className="size-2 rounded-full bg-zinc-200/80" />
-            <span className="w-5 h-2 rounded-full bg-amber-500" />
-            <span className="size-2 rounded-full bg-zinc-200/80" />
-          </div>
-          {/* Bottom Label */}
-          <span className="text-[10px] tracking-[0.25em] font-bold text-zinc-400 text-center uppercase">
-            In Production
-          </span>
-        </div>
-      )
-    }
+    const resolvedBg =
+      branding?.cardBg || bgClass || (isDark ? 'bg-zinc-900' : 'bg-muted/50')
+    const resolvedBorder = branding?.border || borderClass || 'border-border/50'
+    const textThemeClass =
+      branding?.cardForeground ||
+      (isDark ? 'text-white' : 'text-card-foreground')
+    const subtitleThemeClass = isDark
+      ? 'text-white/60'
+      : 'text-muted-foreground'
+    const descThemeClass = isDark ? 'text-white/90' : 'text-muted-foreground'
 
     return (
-      <div
+      <Card
         ref={ref}
         className={cn(
-          'group flex flex-col justify-between p-6 h-[380px] w-full rounded-[28px] relative overflow-hidden shadow-xs border transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
-          variant === 'solid' ? bgClass : '',
-          currentBorderClass,
+          smallCardVariants({ variant }),
+          variant === 'solid' ? resolvedBg : '',
+          resolvedBorder,
           className,
         )}
         {...props}
@@ -147,125 +212,101 @@ export const ProductCardSmall = React.forwardRef<
         )}
 
         {/* Content (relative for stacking above overlays) */}
-        <div className="relative z-10 flex flex-col h-full justify-between">
+        <div className="relative z-10 flex flex-col h-full justify-between p-6">
           {/* Header */}
-          <div className="flex justify-between items-start">
-            <div className="flex items-center gap-3">
-              {/* App Icon */}
-              {icon && (
-                <div className={cn(
-                  'size-11 rounded-xl bg-white shadow-xs flex items-center justify-center overflow-hidden shrink-0 border border-border/50',
-                  iconClass
-                )}>
-                  {typeof icon === 'string' ? (
-                    <img
-                      src={icon}
-                      alt={title}
-                      className="size-full object-cover"
-                    />
-                  ) : (
-                    icon
-                  )}
-                </div>
-              )}
-              {/* App Info */}
-              <div className="flex flex-col gap-0.5">
-                <span
-                  className={cn(
-                    'text-[16px] font-semibold leading-tight',
-                    textThemeClass,
-                    titleClass,
-                  )}
-                >
-                  {title}
-                </span>
-                {subtitle && (
+          <CardHeader className="p-0 gap-0">
+            <div className="flex justify-between items-start">
+              <div className="flex items-center gap-3">
+                {icon && (
+                  <AppIcon icon={icon} alt={title} className={iconClass} />
+                )}
+                <div className="flex flex-col gap-0.5">
                   <span
                     className={cn(
-                      'text-[12.5px] font-medium leading-none',
-                      subtitleThemeClass,
-                      subtitleClass,
+                      'text-[16px] font-semibold leading-tight',
+                      textThemeClass,
+                      titleClass,
                     )}
                   >
-                    {subtitle}
+                    {title}
                   </span>
-                )}
+                  {subtitle && (
+                    <span
+                      className={cn(
+                        'text-[12.5px] font-medium leading-none',
+                        subtitleThemeClass,
+                        subtitleClass,
+                      )}
+                    >
+                      {subtitle}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
 
-            {/* Circular Link Button */}
-            {href && (
-              <a
-                href={href}
-                className={cn(
-                  'flex items-center justify-center size-8 rounded-full shadow-xs border transition-all duration-200',
-                  isDark
-                    ? 'bg-white/95 text-zinc-900 border-transparent hover:bg-white hover:scale-105'
-                    : 'bg-white text-zinc-700 border-border/50 hover:bg-zinc-50 hover:scale-105',
-                )}
-                aria-label={`Open ${title}`}
-              >
-                <svg
-                  width="9"
-                  height="9"
-                  viewBox="0 0 10 10"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="stroke-[1.75]"
-                >
-                  <path
-                    d="M1.5 8.5L8.5 1.5M8.5 1.5H3M8.5 1.5V7"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </a>
-            )}
-          </div>
+              {href && (
+                <ExternalLinkButton
+                  href={href}
+                  label={`Open ${title}`}
+                  isDark={isDark}
+                />
+              )}
+            </div>
+            {headerExtra}
+          </CardHeader>
 
           {/* Body Description */}
           {description && (
-            <p
-              className={cn(
-                'text-[14.5px] leading-relaxed font-medium mt-auto mb-4 tracking-tight',
-                descThemeClass,
-                descriptionClass,
-              )}
-            >
-              {description}
-            </p>
+            <CardContent className="p-0 mt-auto mb-4">
+              <p
+                className={cn(
+                  'text-[14.5px] leading-relaxed font-medium tracking-tight',
+                  descThemeClass,
+                  descriptionClass,
+                )}
+              >
+                {description}
+              </p>
+            </CardContent>
           )}
 
           {/* Footer Badges */}
-          {badges.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {badges.map((badge, idx) => (
-                <div
-                  key={idx}
-                  className={cn(
-                    'inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-[12px] font-semibold border transition-colors select-none',
-                    badge.bgClass ||
-                      (isDark
-                        ? 'bg-white/10 hover:bg-white/15 text-white border-white/10'
-                        : 'bg-zinc-200/60 hover:bg-zinc-200/80 text-zinc-800 border-transparent'),
-                    badge.textClass || '',
-                  )}
-                >
-                  {badge.icon && <span className="shrink-0">{badge.icon}</span>}
-                  <span>{badge.label}</span>
-                </div>
-              ))}
-            </div>
-          )}
+          <CardFooter className="p-0 flex-col items-start gap-2">
+            {badges.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {badges.map((badge, idx) => (
+                  <Badge
+                    key={idx}
+                    variant="secondary"
+                    className={cn(
+                      'px-3.5 py-1.5 rounded-full text-[12px] font-semibold gap-1 transition-colors select-none',
+                      badge.className ||
+                        badge.bgClass ||
+                        (isDark
+                          ? 'bg-white/10 hover:bg-white/15 text-white border-white/10'
+                          : 'bg-secondary hover:bg-secondary/80 text-secondary-foreground border-transparent'),
+                      badge.textClass || '',
+                    )}
+                  >
+                    {badge.icon && (
+                      <span className="shrink-0">{badge.icon}</span>
+                    )}
+                    <span>{badge.label}</span>
+                  </Badge>
+                ))}
+              </div>
+            )}
+            {footerExtra}
+          </CardFooter>
         </div>
-      </div>
+      </Card>
     )
   },
 )
 ProductCardSmall.displayName = 'ProductCardSmall'
 
-// Laurel Wreath Badge Component
+// ─── Laurel Wreath Badge ───────────────────────────────────────────────────────
+
 export function LaurelWreathBadge({ className }: { className?: string }) {
   return (
     <div className={cn('inline-flex items-center select-none', className)}>
@@ -360,7 +401,8 @@ export function LaurelWreathBadge({ className }: { className?: string }) {
   )
 }
 
-// Trendshift Badge Component
+// ─── Trendshift Badge ──────────────────────────────────────────────────────────
+
 export interface TrendshiftBadgeProps {
   repositoryId: string | number
   repoName: string
@@ -398,7 +440,8 @@ export function TrendshiftBadge({
   )
 }
 
-// Product Card Github Stats Component
+// ─── GitHub Stats ──────────────────────────────────────────────────────────────
+
 export interface ProductCardGithubStatsProps {
   githubUrl?: string
   stars?: string | number
@@ -428,11 +471,10 @@ export function ProductCardGithubStats({
           rel="noreferrer"
           className="inline-flex items-center gap-1.5 hover:text-foreground transition-colors"
         >
-          {/* Solid/Filled GitHub Icon using soft shadcn color */}
           <svg
             role="img"
             viewBox="0 0 24 24"
-            className="size-3.5 fill-current text-muted-foreground"
+            className="size-3.5 fill-current"
             aria-hidden="true"
           >
             <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
@@ -442,33 +484,13 @@ export function ProductCardGithubStats({
       )}
       {stars !== undefined && (
         <span className="inline-flex items-center gap-1.5">
-          {/* Solid/Filled Star Icon using soft shadcn color */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            className="size-3.5 fill-current text-muted-foreground"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
-              clipRule="evenodd"
-            />
-          </svg>
+          <Star className="size-3.5 fill-current" aria-hidden="true" />
           <span>{stars} stars</span>
         </span>
       )}
       {downloads !== undefined && (
         <span className="inline-flex items-center gap-1.5">
-          {/* Solid/Filled Download Icon using soft shadcn color */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            className="size-3.5 fill-current text-muted-foreground"
-            aria-hidden="true"
-          >
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 11H8l4 4 4-4h-3V7h-2v6z" />
-          </svg>
+          <Download className="size-3.5" aria-hidden="true" />
           <span>{downloads} downloads</span>
         </span>
       )}
@@ -476,7 +498,64 @@ export function ProductCardGithubStats({
   )
 }
 
-// Large Card Component
+// ─── Large Card Variants ───────────────────────────────────────────────────────
+
+const largeCardVariants = cva(
+  'group grid grid-cols-1 md:grid-cols-12 rounded-3xl overflow-hidden w-full p-0 gap-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
+  {
+    variants: {
+      theme: {
+        light: 'bg-card shadow-xs',
+        dark: 'bg-zinc-950',
+      },
+    },
+    defaultVariants: {
+      theme: 'light',
+    },
+  },
+)
+
+// ─── ProductCardLarge ──────────────────────────────────────────────────────────
+
+export interface ProductCardLargeProps extends React.ComponentProps<'div'> {
+  title: string
+  subtitle: string
+  description: string
+  icon: string | React.ReactNode
+  href?: string
+  ctaText?: string
+  ctaHref?: string
+  rightImage?: string
+  githubUrl?: string
+  stars?: string | number
+  downloads?: string | number
+  trendingBadge?: boolean | React.ReactNode
+  theme?: 'light' | 'dark'
+  branding?: BrandingConfig
+  /** Slot: extra content in header area */
+  headerExtra?: React.ReactNode
+  /** Slot: extra content in footer area */
+  footerExtra?: React.ReactNode
+  /** Slot: completely replace the media/right column */
+  mediaSlot?: React.ReactNode
+
+  // Legacy props (still supported for backward compat)
+  /** @deprecated Use branding.cardBg instead */
+  leftBgClass?: string
+  /** @deprecated Use branding.cardBg instead for the right side too */
+  rightBgClass?: string
+  /** @deprecated Use theme='dark' instead */
+  dark?: boolean
+  /** @deprecated Use theme instead */
+  textColor?: 'light' | 'dark'
+  titleClass?: string
+  subtitleClass?: string
+  descriptionClass?: string
+  borderClass?: string
+  iconClass?: string
+  ctaClass?: string
+}
+
 export const ProductCardLarge = React.forwardRef<
   HTMLDivElement,
   ProductCardLargeProps
@@ -491,7 +570,7 @@ export const ProductCardLarge = React.forwardRef<
       href,
       ctaText = 'Create yours today',
       ctaHref = '#',
-      leftBgClass = 'bg-[#f0f9ff]/80',
+      leftBgClass,
       rightImage,
       rightBgClass,
       githubUrl,
@@ -499,26 +578,41 @@ export const ProductCardLarge = React.forwardRef<
       downloads,
       trendingBadge,
       dark = false,
-      theme,
+      theme: themeProp,
       textColor,
+      branding,
       titleClass,
       subtitleClass,
       descriptionClass,
       borderClass,
       iconClass,
       ctaClass,
+      headerExtra,
+      footerExtra,
+      mediaSlot,
       ...props
     },
     ref,
   ) => {
-    const isDark = theme === 'dark' || textColor === 'light' || dark
-    const textTitleClass = isDark ? 'text-zinc-100' : 'text-zinc-900'
-    const textSubtitleClass = isDark ? 'text-zinc-400' : 'text-zinc-500'
-    const textDescClass = isDark ? 'text-zinc-200' : 'text-zinc-800'
-    const currentBorderClass = borderClass || (isDark ? 'border-zinc-800' : 'border-border/50')
+    // Theme resolution: explicit theme > dark prop > textColor > default light
+    const resolvedTheme: 'light' | 'dark' =
+      themeProp ||
+      (dark ? 'dark' : undefined) ||
+      (textColor === 'light' ? 'dark' : undefined) ||
+      'light'
+    const isDark = resolvedTheme === 'dark'
 
-    const defaultLeftBg = isDark ? 'bg-zinc-900' : 'bg-[#f0f9ff]/80'
-    const currentLeftBg = leftBgClass === 'bg-[#f0f9ff]/80' ? defaultLeftBg : (leftBgClass || defaultLeftBg)
+    const textTitleClass = isDark ? 'text-zinc-100' : 'text-card-foreground'
+    const textSubtitleClass = isDark ? 'text-zinc-400' : 'text-muted-foreground'
+    const textDescClass = isDark ? 'text-zinc-200' : 'text-card-foreground'
+    const resolvedBorder =
+      branding?.border ||
+      borderClass ||
+      (isDark ? 'border-zinc-800' : 'border-border/50')
+
+    const defaultLeftBg = isDark ? 'bg-zinc-900' : 'bg-muted/30'
+    const currentLeftBg = branding?.cardBg || leftBgClass || defaultLeftBg
+    const currentRightBg = rightBgClass || currentLeftBg
 
     const isExternal =
       ctaHref &&
@@ -527,12 +621,11 @@ export const ProductCardLarge = React.forwardRef<
         ctaHref.startsWith('tel:'))
 
     return (
-      <div
+      <Card
         ref={ref}
         className={cn(
-          'group grid grid-cols-1 md:grid-cols-12 rounded-[32px] border overflow-hidden w-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
-          isDark ? 'bg-zinc-950' : 'bg-white shadow-xs',
-          currentBorderClass,
+          largeCardVariants({ theme: resolvedTheme }),
+          resolvedBorder,
           className,
         )}
         {...props}
@@ -541,79 +634,62 @@ export const ProductCardLarge = React.forwardRef<
         <div
           className={cn(
             'md:col-span-4 p-8 md:p-6 flex flex-col justify-between h-[480px] md:h-[580px] border-b md:border-b-0',
-            currentBorderClass,
+            resolvedBorder,
             currentLeftBg,
           )}
         >
           {/* Header & Optional Badge */}
-          <div className="flex flex-col gap-4.5">
+          <CardHeader className="p-0 gap-4.5">
             <div className="flex justify-between items-start">
               <div className="flex items-center gap-3">
-                {/* App Icon */}
                 {icon && (
-                  <div className={cn(
-                    'size-11 rounded-xl bg-white shadow-xs flex items-center justify-center overflow-hidden shrink-0 border border-border/50',
-                    iconClass
-                  )}>
-                    {typeof icon === 'string' ? (
-                      <img
-                        src={icon}
-                        alt={title}
-                        className="size-full object-cover"
-                      />
-                    ) : (
-                      icon
-                    )}
-                  </div>
+                  <AppIcon icon={icon} alt={title} className={iconClass} />
                 )}
-                {/* App Info */}
                 <div className="flex flex-col gap-0.5">
-                  <span className={cn('text-[17px] font-semibold leading-tight', textTitleClass, titleClass)}>
+                  <span
+                    className={cn(
+                      'text-[17px] font-semibold leading-tight',
+                      textTitleClass,
+                      titleClass,
+                    )}
+                  >
                     {title}
                   </span>
-                  <span className={cn('text-[13px] font-medium leading-none', textSubtitleClass, subtitleClass)}>
+                  <span
+                    className={cn(
+                      'text-[13px] font-medium leading-none',
+                      textSubtitleClass,
+                      subtitleClass,
+                    )}
+                  >
                     {subtitle}
                   </span>
                 </div>
               </div>
 
-              {/* Circular Link Button */}
               {href && (
-                <a
+                <ExternalLinkButton
                   href={href}
-                  className={cn(
-                    'flex items-center justify-center size-8 rounded-full bg-white text-zinc-700 border border-border/50 shadow-xs hover:bg-zinc-50 hover:scale-105 transition-all duration-200',
-                    isDark && 'bg-zinc-800 text-zinc-200 border-zinc-700 hover:bg-zinc-700'
-                  )}
-                  aria-label={`Open ${title}`}
-                >
-                  <svg
-                    width="10"
-                    height="10"
-                    viewBox="0 0 10 10"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="stroke-[1.75]"
-                  >
-                    <path
-                      d="M1.5 8.5L8.5 1.5M8.5 1.5H3M8.5 1.5V7"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </a>
+                  label={`Open ${title}`}
+                  isDark={isDark}
+                />
               )}
             </div>
-          </div>
+            {headerExtra}
+          </CardHeader>
 
           {/* Description & Stats */}
-          <div className="mt-auto py-4 flex flex-col gap-3">
-            {trendingBadge && (
-              trendingBadge === true ? <LaurelWreathBadge /> : trendingBadge
-            )}
+          <CardContent className="mt-auto py-4 px-0 flex flex-col gap-3">
+            {trendingBadge &&
+              (trendingBadge === true ? <LaurelWreathBadge /> : trendingBadge)}
 
-            <p className={cn('text-[17.5px] leading-relaxed font-semibold tracking-tight', textDescClass, descriptionClass)}>
+            <p
+              className={cn(
+                'text-[17.5px] leading-relaxed font-semibold tracking-tight',
+                textDescClass,
+                descriptionClass,
+              )}
+            >
               {description}
             </p>
 
@@ -622,44 +698,54 @@ export const ProductCardLarge = React.forwardRef<
               stars={stars}
               downloads={downloads}
             />
-          </div>
+          </CardContent>
 
           {/* CTA Button */}
-          <Button
-            asChild
-            variant="outline"
-            className={cn(
-              'rounded-full bg-white hover:bg-zinc-50 text-zinc-800 border-border/50 shadow-xs px-4.5 py-2.5 text-[13.5px] font-semibold transition-all duration-200 hover:-translate-y-[0.5px] h-auto',
-              isDark && 'bg-zinc-800 hover:bg-zinc-700 text-zinc-100 border-zinc-700',
-              ctaClass
-            )}
-          >
-            {isExternal ? (
-              <a href={ctaHref}>{ctaText}</a>
-            ) : (
-              <Link to={ctaHref}>{ctaText}</Link>
-            )}
-          </Button>
+          <CardFooter className="p-0 flex-col items-start gap-2">
+            <Button
+              asChild
+              variant="outline"
+              className={cn(
+                'rounded-full shadow-xs px-4.5 py-2.5 text-[13.5px] font-semibold transition-all duration-200 hover:-translate-y-[0.5px] h-auto',
+                isDark &&
+                  'bg-zinc-800 hover:bg-zinc-700 text-zinc-100 border-zinc-700',
+                ctaClass,
+              )}
+            >
+              {isExternal ? (
+                <a href={ctaHref}>{ctaText}</a>
+              ) : (
+                <Link to={ctaHref}>{ctaText}</Link>
+              )}
+            </Button>
+            {footerExtra}
+          </CardFooter>
         </div>
 
-        {/* Right Column (mockup screenshot) */}
-        <div
-          className={cn(
-            'md:col-span-8 overflow-hidden h-[400px] md:h-[580px] relative select-none pt-8 pl-8 md:pt-14 md:pl-14',
-            rightBgClass || currentLeftBg,
-          )}
-        >
-          <img
-            src={rightImage}
-            alt={`${title} screenshot`}
+        {/* Right Column (media) */}
+        {mediaSlot ? (
+          <div className="md:col-span-8 overflow-hidden h-[400px] md:h-[580px] relative select-none">
+            {mediaSlot}
+          </div>
+        ) : rightImage ? (
+          <div
             className={cn(
-              'w-full h-full object-cover object-left-top rounded-tl-xl border-t border-l',
-              currentBorderClass,
+              'md:col-span-8 overflow-hidden h-[400px] md:h-[580px] relative select-none pt-8 pl-8 md:pt-14 md:pl-14',
+              currentRightBg,
             )}
-            loading="lazy"
-          />
-        </div>
-      </div>
+          >
+            <img
+              src={rightImage}
+              alt={`${title} screenshot`}
+              className={cn(
+                'w-full h-full object-cover object-left-top rounded-tl-xl border-t border-l',
+                resolvedBorder,
+              )}
+              loading="lazy"
+            />
+          </div>
+        ) : null}
+      </Card>
     )
   },
 )
