@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { PrivacyPolicy } from '~/features/legal'
+import { LandingLayout } from '~/modules/landing/components/landing-layout'
 import { seo } from '~/utils/seo'
 
 export const Route = createFileRoute('/privacy')({
@@ -17,5 +18,9 @@ export const Route = createFileRoute('/privacy')({
 })
 
 function PrivacyPage() {
-  return <PrivacyPolicy />
+  return (
+    <LandingLayout>
+      <PrivacyPolicy />
+    </LandingLayout>
+  )
 }

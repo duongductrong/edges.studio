@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { TermsOfService } from '~/features/legal'
+import { LandingLayout } from '~/modules/landing/components/landing-layout'
 import { seo } from '~/utils/seo'
 
 export const Route = createFileRoute('/terms')({
@@ -17,5 +18,9 @@ export const Route = createFileRoute('/terms')({
 })
 
 function TermsPage() {
-  return <TermsOfService />
+  return (
+    <LandingLayout>
+      <TermsOfService />
+    </LandingLayout>
+  )
 }
