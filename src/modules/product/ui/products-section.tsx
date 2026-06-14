@@ -142,11 +142,11 @@ const AestheticIcon = (
   />
 )
 
-// Droplit App Icon
-const DroplitIcon = (
+// Compresso App Icon
+const CompressoIcon = (
   <img
-    src="/droplit-icon.png"
-    alt="Droplit"
+    src="/compresso-icon.png"
+    alt="Compresso"
     className="size-full object-cover scale-[1.18]"
   />
 )
@@ -186,7 +186,7 @@ const InstantlyOpenSourceBadge = (
   </div>
 )
 
-// Droplit Media Mockup Slot
+// Compresso Media Mockup Slot
 
 // ─── Products Data Schema ──────────────────────────────────────────────────────
 
@@ -298,21 +298,21 @@ const productsDatabase: Product[] = [
     rightImage: '/instantly-app.png',
   },
   {
-    id: 'droplit',
+    id: 'compresso',
     size: 'large',
-    title: 'Droplit',
+    title: 'Compresso',
     subtitle: 'Utility',
     description:
       'Native macOS media optimizer — drag, drop, and optimize from anywhere.',
-    icon: DroplitIcon,
+    icon: CompressoIcon,
     category: 'desktop',
     platforms: ['mac'],
-    href: 'https://github.com/duongductrong/Droplit',
+    href: 'https://github.com/duongductrong/Compresso',
     ctaText: 'View on GitHub',
-    ctaHref: 'https://github.com/duongductrong/Droplit',
+    ctaHref: 'https://github.com/duongductrong/Compresso',
     leftBgClass: 'bg-sky-500/5 dark:bg-sky-950/20',
-    githubUrl: 'https://github.com/duongductrong/Droplit',
-    rightImage: './droplit-app.webp',
+    githubUrl: 'https://github.com/duongductrong/Compresso',
+    rightImage: './compresso-app.webp',
   },
 ]
 
