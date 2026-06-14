@@ -1,3 +1,4 @@
+import { CONTACT_EMAIL } from '@/shared/config/site'
 import { Container } from '@/shared/ui/container'
 
 export function TermsPage() {
@@ -205,10 +206,10 @@ export function TermsPage() {
                 <strong>Good-faith resolution</strong> — We strongly encourage
                 customers to contact us at{' '}
                 <a
-                  href="mailto:info@edges.studio"
+                  href={`mailto:${CONTACT_EMAIL}`}
                   className="text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:text-primary/80"
                 >
-                  info@edges.studio
+                  {CONTACT_EMAIL}
                 </a>{' '}
                 before filing a dispute. In most cases, we can resolve issues
                 faster and more favourably through direct communication.
@@ -309,10 +310,10 @@ export function TermsPage() {
               If you have any questions about these Terms of Service, please
               contact us at{' '}
               <a
-                href="mailto:info@edges.studio"
+                href={`mailto:${CONTACT_EMAIL}`}
                 className="text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:text-primary/80"
               >
-                info@edges.studio
+                {CONTACT_EMAIL}
               </a>
               .
             </p>

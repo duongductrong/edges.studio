@@ -1,6 +1,7 @@
 import { cn } from '@/shared/lib/utils'
 import { Button } from '@/shared/ui/button'
 import { Container } from '@/shared/ui/container'
+import { CONTACT_EMAIL } from '@/shared/config/site'
 import { parseAsStringLiteral, useQueryState } from 'nuqs'
 import { useMemo } from 'react'
 import {
@@ -259,7 +260,7 @@ const productsDatabase: Product[] = [
     category: 'desktop',
     platforms: ['mac'],
     ctaText: 'Request Access',
-    ctaHref: 'mailto:info@edges.studio',
+    ctaHref: `mailto:${CONTACT_EMAIL}`,
     leftBgClass: 'bg-zinc-950',
     dark: true,
     rightImages: [

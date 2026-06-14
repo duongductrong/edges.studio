@@ -3,7 +3,7 @@ export const SITE_TAGLINE = 'Build Once. Ship Beautifully.'
 export const SITE_DESCRIPTION =
   'A studio for crafting premium apps, with tools you can shape around your workflow and creativity.'
 export const SITE_URL = 'https://edges.studio'
-export const CONTACT_EMAIL = 'info@edges.studio'
+export const CONTACT_EMAIL = 'hello@edges.studio'
 export const COMPANY_NAME = 'edges.studio'
 
 export const CTA_PRIMARY_URL = '#products'

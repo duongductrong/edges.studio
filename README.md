@@ -1,269 +1,61 @@
-Welcome to your new TanStack Start app!
+<div align="center">
+  <img src="./banner.png" width="200" alt="edges.studio banner" />
 
-# Getting Started
+  <h1>edges.studio</h1>
+  <p><strong>Build Once. Ship Beautifully.</strong></p>
 
-To run this application:
+  <p>A studio for crafting premium apps, with tools you can shape around your workflow and creativity.</p>
 
-```bash
-npm install
-npm run dev
-```
+  <p>
+    Built with <a href="https://react.dev/">React 19</a>,
+    <a href="https://tanstack.com/start">TanStack Start</a>,
+    <a href="https://tailwindcss.com/">Tailwind CSS v4</a>, and
+    <a href="https://workers.cloudflare.com/">Cloudflare Workers</a>.
+  </p>
 
-# Building For Production
+  <p>
+    <a href="#development">Development</a> •
+    <a href="#architecture">Architecture</a>
+  </p>
+</div>
 
-To build this application for production:
+## Development
 
-```bash
-npm run build
-```
+### Getting Started
 
-## Testing
-
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
-
-```bash
-npm run test
-```
-
-## Styling
-
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
-
-### Removing Tailwind CSS
-
-If you prefer not to use Tailwind CSS:
-
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Uninstall the packages: `npm install @tailwindcss/vite tailwindcss -D`
-
-## Linting & Formatting
-
-This project uses [eslint](https://eslint.org/) and [prettier](https://prettier.io/) for linting and formatting. Eslint is configured using [tanstack/eslint-config](https://tanstack.com/config/latest/docs/eslint). The following scripts are available:
+Ensure you have [pnpm](https://pnpm.io/) installed, then run:
 
 ```bash
-npm run lint
-npm run format
-npm run check
+# Install dependencies
+pnpm install
+
+# Start development server
+pnpm dev
 ```
 
-## Deploy to Cloudflare Workers
-
-This project uses the Cloudflare Vite plugin (configured in `vite.config.ts`) and `wrangler.jsonc`:
-
-### Manual Deployment
-
-1. Install Wrangler: `pnpm install -g wrangler`
-2. Authenticate: `pnpm wrangler login`
-3. Deploy: `pnpm wrangler deploy`
-
-For production env vars, run `pnpm wrangler secret put MY_VAR` for each secret listed in `.env.example`. Public (non-secret) vars go in `wrangler.jsonc` under `vars`.
-
-KV, D1, R2, and Durable Object bindings are configured in `wrangler.jsonc` — see https://developers.cloudflare.com/workers/wrangler/configuration/.
-
-### Automated CI/CD Deployment
-
-Deployments are automated via GitHub Actions when pushes are made to the `master` branch. The workflow is defined in `.github/workflows/deploy.yml`.
-
-#### Prerequisites for CI/CD
-
-To enable automatic deployment, configure the following secrets in your GitHub Repository settings (**Settings > Secrets and variables > Actions**):
-
-1. **`CLOUDFLARE_API_TOKEN`**: A Cloudflare API token with permissions to edit Workers (use the "Edit Cloudflare Workers" template on Cloudflare).
-2. **`CLOUDFLARE_ACCOUNT_ID`**: Your Cloudflare Account ID.
-
-For runtime environment variables and secrets (e.g., `BETTER_AUTH_SECRET`), configure them in the Cloudflare dashboard under **Workers & Pages > tanstack-start-app > Settings > Variables**.
-
-## Shadcn
-
-Add components using the latest version of [Shadcn](https://ui.shadcn.com/).
+### Build & Deploy
 
 ```bash
-pnpm dlx shadcn@latest add button
+# Build for production
+pnpm build
+
+# Deploy to Cloudflare Workers
+pnpm deploy
 ```
 
-## Setting up Better Auth
-
-1. Generate and set the `BETTER_AUTH_SECRET` environment variable in your `.env.local`:
-
-   ```bash
-   npx -y @better-auth/cli secret
-   ```
-
-2. Visit the [Better Auth documentation](https://www.better-auth.com) to unlock the full potential of authentication in your app.
-
-### Adding a Database (Optional)
-
-Better Auth can work in stateless mode, but to persist user data, add a database:
-
-```typescript
-// src/lib/auth.ts
-import { betterAuth } from 'better-auth'
-import { Pool } from 'pg'
-
-export const auth = betterAuth({
-  database: new Pool({
-    connectionString: process.env.DATABASE_URL,
-  }),
-  // ... rest of config
-})
-```
-
-Then run migrations:
+### Testing & Formatting
 
 ```bash
-npx -y @better-auth/cli migrate
+# Run tests (Vitest)
+pnpm test
+
+# Format and lint code (Prettier & ESLint)
+pnpm format
+
+# Type check and lint check
+pnpm check
 ```
 
-## Routing
+## Architecture
 
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from '@tanstack/react-router'
-```
-
-Then anywhere in your JSX you can use it like so:
-
-```tsx
-<Link to="/about">About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My App' },
-    ],
-  }),
-  shellComponent: ({ children }) => (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <header>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  ),
-})
-```
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Server Functions
-
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
-
-```tsx
-import { createServerFn } from '@tanstack/react-start'
-
-const getServerTime = createServerFn({
-  method: 'GET',
-}).handler(async () => {
-  return new Date().toISOString()
-})
-
-// Use in a component
-function MyComponent() {
-  const [time, setTime] = useState('')
-
-  useEffect(() => {
-    getServerTime().then(setTime)
-  }, [])
-
-  return <div>Server time: {time}</div>
-}
-```
-
-## API Routes
-
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { json } from '@tanstack/react-start'
-
-export const Route = createFileRoute('/api/hello')({
-  server: {
-    handlers: {
-      GET: () => json({ message: 'Hello, World!' }),
-    },
-  },
-})
-```
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-
-export const Route = createFileRoute('/people')({
-  loader: async () => {
-    const response = await fetch('https://swapi.dev/api/people')
-    return response.json()
-  },
-  component: PeopleComponent,
-})
-
-function PeopleComponent() {
-  const data = Route.useLoaderData()
-  return (
-    <ul>
-      {data.results.map((person) => (
-        <li key={person.name}>{person.name}</li>
-      ))}
-    </ul>
-  )
-}
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
-
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+This project follows a pragmatic **Feature-Sliced Design (FSD)** architecture. For details on directories, routing, and layer boundaries, see [STRUCTURE.md](./docs/STRUCTURE.md).

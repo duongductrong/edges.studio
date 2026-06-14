@@ -1,3 +1,4 @@
+import { CONTACT_EMAIL } from '@/shared/config/site'
 import { Container } from '@/shared/ui/container'
 
 export function PrivacyPage() {
@@ -143,10 +144,10 @@ export function PrivacyPage() {
               correct, delete, or restrict the processing of any personal data
               we hold about you. To exercise these rights, please contact us at{' '}
               <a
-                href="mailto:info@edges.studio"
+                href={`mailto:${CONTACT_EMAIL}`}
                 className="text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:text-primary/80"
               >
-                info@edges.studio
+                {CONTACT_EMAIL}
               </a>
               .
             </p>
@@ -186,10 +187,10 @@ export function PrivacyPage() {
               If you have any questions or concerns about this Privacy Policy,
               please reach out to us at{' '}
               <a
-                href="mailto:info@edges.studio"
+                href={`mailto:${CONTACT_EMAIL}`}
                 className="text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:text-primary/80"
               >
-                info@edges.studio
+                {CONTACT_EMAIL}
               </a>
               .
             </p>
