@@ -9,11 +9,7 @@ import {
   SheetTrigger,
 } from '@/shared/ui/sheet'
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/shared/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/tooltip'
 import { COMPANY_NAME } from '@/shared/config/site'
 import { NAV_LINKS } from '../lib/nav-links'
 
@@ -34,7 +30,7 @@ function DesktopNav() {
         <Link
           key={link.label}
           to={link.to}
-          className="text-[14px] font-medium text-zinc-600 transition-colors hover:text-black"
+          className="text-[14px] font-medium text-muted-foreground transition-colors hover:text-foreground"
         >
           {link.label}
         </Link>
@@ -83,7 +79,9 @@ function MobileNav() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                className="justify-center rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-900 border-none shadow-none"
+                variant="secondary"
+                rounded="full"
+                className="justify-center border-none shadow-none"
                 disabled
               >
                 Login
@@ -112,7 +110,9 @@ export function LandingHeader() {
             <Tooltip>
               <TooltipTrigger>
                 <Button
-                  className="justify-center rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-900 border-none shadow-none"
+                  variant="secondary"
+                  rounded="full"
+                  className="justify-center border-none shadow-none"
                   disabled
                 >
                   Login

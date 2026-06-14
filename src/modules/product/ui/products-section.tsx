@@ -64,10 +64,10 @@ function PlatformBadge({ platform, className }: PlatformBadgeProps) {
     mac: {
       label: 'macOS',
       icon: (
-        <MacIcon className="text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-800 dark:group-hover:text-zinc-200 transition-colors" />
+        <MacIcon className="text-muted-foreground group-hover:text-foreground transition-colors" />
       ),
       className:
-        'bg-zinc-100/80 hover:bg-zinc-200/80 dark:bg-zinc-800/80 dark:hover:bg-zinc-700/80 text-zinc-700 dark:text-zinc-300 border-zinc-200/40 dark:border-zinc-800/40',
+        'bg-muted/80 hover:bg-muted dark:bg-muted/30 dark:hover:bg-muted/50 text-muted-foreground border-border/40',
     },
     windows: {
       label: 'Windows',
@@ -77,9 +77,9 @@ function PlatformBadge({ platform, className }: PlatformBadgeProps) {
     },
     ios: {
       label: 'iOS',
-      icon: <IOSIcon className="text-zinc-500 dark:text-zinc-400" />,
+      icon: <IOSIcon className="text-muted-foreground" />,
       className:
-        'bg-zinc-100/80 hover:bg-zinc-200/80 dark:bg-zinc-800/80 dark:hover:bg-zinc-700/80 text-zinc-700 dark:text-zinc-300 border-zinc-200/40 dark:border-zinc-800/40',
+        'bg-muted/80 hover:bg-muted dark:bg-muted/30 dark:hover:bg-muted/50 text-muted-foreground border-border/40',
     },
     android: {
       label: 'Android',
@@ -342,10 +342,10 @@ export function ProductsSection() {
       <Container className="space-y-14">
         {/* Section Header */}
         <div className="space-y-3 text-center">
-          <h2 className="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">
+          <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             Our Products
           </h2>
-          <p className="text-zinc-500 dark:text-zinc-400 max-w-xl mx-auto text-base">
+          <p className="text-muted-foreground max-w-xl mx-auto text-base">
             Explore premium apps developed by edges.studio. We craft tools that
             blend seamlessly into your workflow with elegant design and deep
             utility.
@@ -354,7 +354,7 @@ export function ProductsSection() {
 
         {/* Category Filter Tabs */}
         <div className="flex justify-center">
-          <div className="inline-flex items-center gap-1.5 p-1.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/50 rounded-full shadow-xs">
+          <div className="inline-flex items-center gap-1.5 p-1.5 bg-muted border border-border/50 rounded-full shadow-xs">
             <Button
               variant={activeCategory === 'all' ? 'default' : 'ghost'}
               size="sm"
@@ -393,15 +393,12 @@ export function ProductsSection() {
           </div>
         </div>
 
-        {/* Products Display Container with fade/slide animations */}
-        <div
-          key={activeCategory}
-          className="space-y-14 animate-in fade-in slide-in-from-bottom-4 duration-300 ease-out"
-        >
+        {/* Products Display Container */}
+        <div className="space-y-14">
           {filteredLargeProducts.length === 0 &&
           filteredSmallProducts.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-16 px-4 text-center rounded-[28px] border border-dashed border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/10 max-w-md mx-auto animate-in fade-in duration-300">
-              <div className="size-12 rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/50 flex items-center justify-center text-zinc-400 dark:text-zinc-500 mb-4 shadow-xs">
+            <div className="flex flex-col items-center justify-center py-16 px-4 text-center rounded-[28px] border border-dashed border-border bg-muted/20 dark:bg-muted/5 max-w-md mx-auto">
+              <div className="size-12 rounded-2xl bg-muted border border-border/50 flex items-center justify-center text-muted-foreground mb-4 shadow-xs">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -416,10 +413,10 @@ export function ProductsSection() {
                   />
                 </svg>
               </div>
-              <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-1">
+              <h3 className="text-base font-semibold text-foreground mb-1">
                 No products found
               </h3>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6 max-w-[280px]">
+              <p className="text-sm text-muted-foreground mb-6 max-w-[280px]">
                 We are currently crafting new apps for this category. Check back
                 soon!
               </p>

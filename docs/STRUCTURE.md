@@ -67,12 +67,12 @@ src/
 routes/ ──→ pages/ ──→ modules/ ──→ shared/
 ```
 
-| Layer | Vai trò | Import từ |
-|-------|---------|-----------|
-| `routes/` | Routing + SEO. Thin wrappers. | pages, modules, shared |
-| `pages/` | Tổ hợp modules thành trang | modules, shared |
-| `modules/` | Toàn bộ code 1 domain | shared |
-| `shared/` | UI primitives, utilities, config | (không import layer khác) |
+| Layer      | Vai trò                          | Import từ                 |
+| ---------- | -------------------------------- | ------------------------- |
+| `routes/`  | Routing + SEO. Thin wrappers.    | pages, modules, shared    |
+| `pages/`   | Tổ hợp modules thành trang       | modules, shared           |
+| `modules/` | Toàn bộ code 1 domain            | shared                    |
+| `shared/`  | UI primitives, utilities, config | (không import layer khác) |
 
 ### Quy tắc nghiêm ngặt
 
@@ -82,12 +82,12 @@ routes/ ──→ pages/ ──→ modules/ ──→ shared/
 
 ## Segments trong mỗi module
 
-| Segment | Chứa gì | Tạo khi |
-|---------|---------|---------|
-| `ui/` | React components | Luôn luôn |
-| `model/` | Types, interfaces, state | Có types riêng |
-| `lib/` | Helpers, constants, data | Có logic/data |
-| `api/` | API calls, server functions | Có API integration |
+| Segment  | Chứa gì                     | Tạo khi            |
+| -------- | --------------------------- | ------------------ |
+| `ui/`    | React components            | Luôn luôn          |
+| `model/` | Types, interfaces, state    | Có types riêng     |
+| `lib/`   | Helpers, constants, data    | Có logic/data      |
+| `api/`   | API calls, server functions | Có API integration |
 
 ## Thêm module mới
 
@@ -107,17 +107,17 @@ pnpm dlx shadcn@latest add <component>
 
 ## Naming Conventions
 
-| Loại | Convention | Ví dụ |
-|------|-----------|-------|
-| Files | kebab-case | `product-cards.tsx` |
-| Components | PascalCase | `ProductCardLarge` |
-| Barrel exports | `index.ts` | `export { HomePage } from './home-page'` |
-| Types | `types.ts` trong `model/` | `modules/product/model/types.ts` |
+| Loại           | Convention                | Ví dụ                                    |
+| -------------- | ------------------------- | ---------------------------------------- |
+| Files          | kebab-case                | `product-cards.tsx`                      |
+| Components     | PascalCase                | `ProductCardLarge`                       |
+| Barrel exports | `index.ts`                | `export { HomePage } from './home-page'` |
+| Types          | `types.ts` trong `model/` | `modules/product/model/types.ts`         |
 
 ## TanStack Start files (ngoài FSD)
 
-| File | Vai trò | Sửa tay? |
-|------|---------|----------|
-| `router.tsx` | Router instance config | ✅ |
+| File               | Vai trò                   | Sửa tay?         |
+| ------------------ | ------------------------- | ---------------- |
+| `router.tsx`       | Router instance config    | ✅               |
 | `routeTree.gen.ts` | Auto-generated route tree | ❌ KHÔNG BAO GIỜ |
-| `styles.css` | Global styles + Tailwind | ✅ |
+| `styles.css`       | Global styles + Tailwind  | ✅               |
