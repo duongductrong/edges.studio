@@ -117,9 +117,7 @@ export function LandingHeader() {
                   Login
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>
-                Currently unavailable.
-              </TooltipContent>
+              <TooltipContent>Currently unavailable.</TooltipContent>
             </Tooltip>
           </div>
 

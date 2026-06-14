@@ -71,7 +71,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 
     document.addEventListener('click', handleExternalClicks, { capture: true })
     return () => {
-      document.removeEventListener('click', handleExternalClicks, { capture: true })
+      document.removeEventListener('click', handleExternalClicks, {
+        capture: true,
+      })
     }
   }, [])
 
