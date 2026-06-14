@@ -1,7 +1,7 @@
+import { CONTACT_EMAIL } from '@/shared/config/site'
 import { cn } from '@/shared/lib/utils'
 import { Button } from '@/shared/ui/button'
 import { Container } from '@/shared/ui/container'
-import { CONTACT_EMAIL } from '@/shared/config/site'
 import { parseAsStringLiteral, useQueryState } from 'nuqs'
 import { useMemo } from 'react'
 import {
@@ -367,7 +367,7 @@ export function ProductsSection() {
               onClick={() => setActiveCategory('all')}
               className="font-medium text-xs px-4"
             >
-              All Products
+              All
             </Button>
             <Button
               variant={activeCategory === 'desktop' ? 'default' : 'ghost'}
@@ -378,9 +378,8 @@ export function ProductsSection() {
             >
               <div className="flex items-center gap-0.5 opacity-80">
                 <MacIcon />
-                <WindowsIcon />
               </div>
-              <span>Desktop Apps</span>
+              <span>Desktop</span>
             </Button>
             <Button
               variant={activeCategory === 'mobile' ? 'default' : 'ghost'}
@@ -391,9 +390,8 @@ export function ProductsSection() {
             >
               <div className="flex items-center gap-0.5 opacity-80">
                 <IOSIcon />
-                <AndroidIcon />
               </div>
-              <span>Mobile Apps</span>
+              <span>Mobile</span>
             </Button>
           </div>
         </div>
