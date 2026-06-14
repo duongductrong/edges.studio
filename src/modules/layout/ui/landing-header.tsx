@@ -108,12 +108,11 @@ export function LandingHeader() {
 
           <div className="hidden md:block">
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <Button
                   variant="secondary"
                   rounded="full"
                   className="justify-center border-none shadow-none"
-                  disabled
                 >
                   Login
                 </Button>

@@ -1,12 +1,13 @@
+import { cn } from '@/shared/lib/utils'
 import { Button } from '@/shared/ui/button'
 import { Container } from '@/shared/ui/container'
+import { parseAsStringLiteral, useQueryState } from 'nuqs'
+import { useMemo } from 'react'
 import {
   ProductCardLarge,
   ProductCardSmall,
   TrendshiftBadge,
 } from './product-cards'
-import { cn } from '@/shared/lib/utils'
-import { useMemo, useState } from 'react'
 
 // ─── Platform Icons ───────────────────────────────────────────────────────────
 
@@ -317,9 +318,12 @@ const productsDatabase: Product[] = [
 // ─── ProductsSection ──────────────────────────────────────────────────────────
 
 export function ProductsSection() {
-  const [activeCategory, setActiveCategory] = useState<
-    'all' | 'desktop' | 'mobile'
-  >('all')
+  const [activeCategory, setActiveCategory] = useQueryState(
+    'category',
+    parseAsStringLiteral(['all', 'desktop', 'mobile'] as const).withDefault(
+      'all',
+    ),
+  )
 
   const filteredLargeProducts = useMemo(() => {
     return productsDatabase.filter(
