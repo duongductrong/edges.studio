@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { PrivacyPolicy } from '~/modules/legal'
-import { LandingLayout } from '~/modules/landing/components/landing-layout'
-import { seo } from '~/utils/seo'
+import { PrivacyPage } from '@/pages/privacy'
+import { LandingLayout } from '@/modules/layout'
+import { seo } from '@/shared/lib/create-meta'
 
 export const Route = createFileRoute('/privacy')({
   head: () => ({
@@ -14,13 +14,13 @@ export const Route = createFileRoute('/privacy')({
       }),
     ],
   }),
-  component: PrivacyPage,
+  component: PrivacyPage_,
 })
 
-function PrivacyPage() {
+function PrivacyPage_() {
   return (
     <LandingLayout>
-      <PrivacyPolicy />
+      <PrivacyPage />
     </LandingLayout>
   )
 }

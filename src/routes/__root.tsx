@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 
-import { TooltipProvider } from '@/components/ui/tooltip'
+import { TooltipProvider } from '@/shared/ui/tooltip'
 import appCss from '../styles.css?url'
 
 export const Route = createRootRoute({

@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { HomePage } from '@/modules/landing/pages/home/home-page'
-import { seo } from '@/utils/seo'
+import { HomePage } from '@/pages/home'
+import { seo } from '@/shared/lib/create-meta'
 
 export const Route = createFileRoute('/')({
   head: () => ({
