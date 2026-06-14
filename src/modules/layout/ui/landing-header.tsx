@@ -16,7 +16,7 @@ import { NAV_LINKS } from '../lib/nav-links'
 function Logo() {
   return (
     <Link to="/" className="flex items-center gap-2.5">
-      <span className="text-[15px] font-semibold tracking-tight text-foreground">
+      <span className="text-base font-semibold tracking-tight text-foreground">
         {COMPANY_NAME}
       </span>
     </Link>

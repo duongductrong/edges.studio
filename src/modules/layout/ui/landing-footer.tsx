@@ -15,7 +15,7 @@ export function LandingFooter() {
           {/* Brand */}
           <div className="space-y-2">
             <div className="flex items-center gap-2.5">
-              <span className="text-sm font-semibold text-foreground">
+              <span className="text-base font-semibold text-foreground">
                 {COMPANY_NAME}
               </span>
             </div>
